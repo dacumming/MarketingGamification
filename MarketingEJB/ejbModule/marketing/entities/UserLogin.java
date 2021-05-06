@@ -4,28 +4,32 @@ package marketing.entities;
 import java.io.Serializable;
 
 import javax.persistence.*;
-
-
+import java.util.Date;
 
 @Entity
-@Table(name = "banneduser", schema = "marketingdb")
+@Table(name = "userlogin", schema = "marketingdb")
 
-public class BannedUser implements Serializable {
+public class UserLogin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	// one-to-one association to User
-	@OneToOne
+	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datetime;
+	
+	// Bi-directional many-to-one association to User. UserLogin is the owner
+	// entity
+	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
 
-	public BannedUser() {
+	public UserLogin() {
 	}
 
-	public BannedUser(User user) {
+	public UserLogin(User user) {
 		this.user = user;
 	}
 
@@ -36,7 +40,15 @@ public class BannedUser implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public Date getDatetime() {
+		return this.datetime;
+	}
 
+	public void setDatetime(Date datetime) {
+		this.datetime = datetime;
+	}
+	
 	public User getUser() {
 		return this.user;
 	}

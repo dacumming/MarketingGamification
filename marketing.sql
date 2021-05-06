@@ -27,24 +27,26 @@ CREATE TABLE `usertable` (
   `password` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `points` int NOT NULL,
+  `isbanned` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `usertable` WRITE;
 /*!40000 ALTER TABLE `usertable` DISABLE KEYS */;
-INSERT INTO `usertable` VALUES (1,'user1','pass1','asd1@asd.com',0),(2,'user2','pass2','asd2@asd.com',0),(3,'user3','pass3','asd3@asd.com',0);
+INSERT INTO `usertable` VALUES (1,'user1','pass1','asd1@asd.com',0,0),(2,'user2','pass2','asd2@asd.com',0,0),(3,'user3','pass3','asd3@asd.com',0,0);
 /*!40000 ALTER TABLE `usertable` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `banneduser`;
+DROP TABLE IF EXISTS `userlogin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `banneduser` (
+CREATE TABLE `userlogin` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `datetime` datetime NOT NULL,
   `user` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `banned_user_idx` (`user`),
-  CONSTRAINT `banned_user` FOREIGN KEY (`user`) REFERENCES `usertable` (`id`)
+  KEY `logged_user_idx` (`user`),
+  CONSTRAINT `logged_user` FOREIGN KEY (`user`) REFERENCES `usertable` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

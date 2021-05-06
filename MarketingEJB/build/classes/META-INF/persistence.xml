@@ -7,7 +7,7 @@
 		<class>marketing.entities.User</class>
 		<class>marketing.entities.Review</class>
 		<class>marketing.entities.Questionnaire</class>
-		<class>marketing.entities.BannedUser</class>
+		<class>marketing.entities.UserLogin</class>
 		<class>marketing.entities.BadWord</class>
 	<properties><property name="eclipselink.logging.file" value="FINE"/></properties>
 	</persistence-unit>

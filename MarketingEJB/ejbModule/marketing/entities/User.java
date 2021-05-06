@@ -28,6 +28,8 @@ public class User implements Serializable {
 	private String email;
 
 	private int points;
+	
+	private int isbanned;
 
 	// Bidirectional many-to-one association to Mission
 	/*
@@ -47,6 +49,9 @@ public class User implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Questionnaire> questionnaires;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	private List<UserLogin> userlogins;
+	
 	public User() {
 	}
 
@@ -65,7 +70,15 @@ public class User implements Serializable {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+	
+	public int getIsbanned() {
+		return this.isbanned;
+	}
 
+	public void setIsbanned(int isbanned) {
+		this.isbanned = isbanned;
+	}
+	
 	public String getPassword() {
 		return this.password;
 	}
@@ -119,6 +132,21 @@ public class User implements Serializable {
 
 	public void removeQuestionnaire(Questionnaire questionnaire) {
 		getQuestionnaires().remove(questionnaire);
+	}
+	
+	public List<UserLogin> getUserLogins() {
+		return this.userlogins;
+	}
+
+	public void addUserLogin(UserLogin userlogin) {
+		getUserLogins().add(userlogin);
+		userlogin.setUser(this);
+		// aligns both sides of the relationship
+		// if mission is new, invoking persist() on reporter cascades also to mission
+	}
+
+	public void removeUserLogin(UserLogin userlogin) {
+		getUserLogins().remove(userlogin);
 	}
 
 }
