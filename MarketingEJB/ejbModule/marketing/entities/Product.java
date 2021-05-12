@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "products", schema = "marketingdb")
+@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +28,7 @@ public class Product implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
+	private String image;
 	
 	// Bidirectional one-to-many association to Review
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
@@ -80,7 +82,14 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
+	public String getImage() {
+		return this.image;
+	}
 
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	public List<Review> getReviews() {
 		return this.reviews;
 	}

@@ -14,6 +14,26 @@
 	<h1>Welcome to the Marketing Gamification Home Page</h1>
 	<p
 		th:text="${'Nice to see you again ' + session.user.username + ' ' + session.user.email}"></p>
+	<p id="date"></p>
+	<script>
+	n =  new Date();
+	y = n.getFullYear();
+	m = n.getMonth() + 1;
+	d = n.getDate();
+	document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+	</script>
+
+	
+	<div th:each="p : ${products}">
+    <span th:text="${'Product of the day: ' +  p.name}"></span><br />
+    <span th:text="${'Brand: ' +  p.brand}"></span><br />
+    <img th:src="${p.image}" >
+	</div>
+	
+
+	
+	
+	<p th:text="${'hola'}"></p>
 
 </body>
 </html>
