@@ -4,8 +4,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+
 import javax.persistence.NonUniqueResultException;
 import marketing.entities.User;
+import marketing.entities.UserLogin;
 import marketing.exceptions.*;
 import java.util.List;
 
@@ -25,10 +27,16 @@ public class UserService {
 		} catch (PersistenceException e) {
 			throw new CredentialsException("Could not verify credentals");
 		}
-		if (uList.isEmpty())
+		if (uList.isEmpty()) {
 			return null;
-		else if (uList.size() == 1)
-			return uList.get(0);
+		}
+		else if (uList.size() == 1) {
+			User loggedUser = uList.get(0);
+			UserLogin userlogin = new UserLogin(loggedUser);
+			em.persist(loggedUser);
+			loggedUser.addUserLogin(userlogin);
+			return loggedUser;
+		}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}

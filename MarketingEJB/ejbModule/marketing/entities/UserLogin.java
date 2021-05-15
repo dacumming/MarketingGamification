@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "userlogin", schema = "marketingdb")
@@ -30,6 +31,7 @@ public class UserLogin implements Serializable {
 	}
 
 	public UserLogin(User user) {
+		this.datetime = new Timestamp(System.currentTimeMillis());
 		this.user = user;
 	}
 
