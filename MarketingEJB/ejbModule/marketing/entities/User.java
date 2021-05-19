@@ -44,9 +44,6 @@ public class User implements Serializable {
 	 */
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Review> reviews;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Questionnaire> questionnaires;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
@@ -104,20 +101,6 @@ public class User implements Serializable {
 		this.email = email;
 	}
 	
-	public List<Review> getReviews() {
-		return this.reviews;
-	}
-
-	public void addReview(Review review) {
-		getReviews().add(review);
-		review.setUser(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
-	}
-
-	public void removeReview(Review review) {
-		getReviews().remove(review);
-	}
 	
 	public List<Questionnaire> getQuestionnaires() {
 		return this.questionnaires;

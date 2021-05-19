@@ -73,12 +73,20 @@ public class CheckLogin extends HttpServlet {
 		// show login page with error message
 
 		String path;
+				
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "Incorrect username or password");
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
+		} else if (user.getUsername().equals("admin")) {
+			request.getSession().setAttribute("user", user);
+			
+			path = getServletContext().getContextPath() + "/AdminPage";
+			response.sendRedirect(path);
+		
+		
 		} else {
 			request.getSession().setAttribute("user", user);
 			

@@ -2,8 +2,10 @@ package marketing.entities;
 
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.*;
+import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "questionnaire", schema = "marketingdb")
@@ -14,21 +16,17 @@ public class Questionnaire implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private String answer1;
-
-	private String answer2;
 	
-	private String answer3;
 	
-	// Bi-directional many-to-one association to User. Questionnaire is the owner
-	// entity
+	@Temporal(TemporalType.DATE)
+	private Date date;
+	
+	private int iscanceled;
+	
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
 	
-	// Bi-directional many-to-one association to Product. Questionnaire is the owner
-	// entity
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;
@@ -36,16 +34,13 @@ public class Questionnaire implements Serializable {
 	public Questionnaire() {
 	}
 
-	public Questionnaire(String answer1, String answer2, String answer3, User user, Product product) {
-		this.answer1 = answer1;
-		this.answer2 = answer2;
-		this.answer3 = answer3;
+	public Questionnaire(User user, int iscanceled, Product product) {
+		this.date = new Date();
 		this.user = user;
+		this.iscanceled = iscanceled;
 		this.product = product;
 	}
 
-
-	
 	public int getId() {
 		return this.id;
 	}
@@ -53,29 +48,21 @@ public class Questionnaire implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getAnswer1() {
-		return this.answer1;
+	
+	public Date getDate() {
+		return this.date;
 	}
 
-	public void setAnswer1(String answer1) {
-		this.answer1 = answer1;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
-	public String getAnswer2() {
-		return this.answer2;
+	public int getIsCanceled() {
+		return this.iscanceled;
 	}
 
-	public void setAnswer2(String answer2) {
-		this.answer2 = answer2;
-	}
-	
-	public String getAnswer3() {
-		return this.answer3;
-	}
-
-	public void setAnswer3(String answer3) {
-		this.answer3 = answer3;
+	public void setIsCanceled(int iscanceled) {
+		this.iscanceled = iscanceled;
 	}
 	
 	public User getUser() {
@@ -85,7 +72,7 @@ public class Questionnaire implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
 	public Product getProduct() {
 		return this.product;
 	}

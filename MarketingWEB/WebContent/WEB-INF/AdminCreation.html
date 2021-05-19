@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin CREATION Page</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+<div align="right">
+		<a th:href="@{/AdminPage}">Back</a>
+	</div>
+	<h1>Admin CREATION Page</h1>
+
+	
+	<div>
+		<p>Update product date</p>
+		<form action="#" th:action="@{/SetDateProduct}" method="POST">
+			<fieldset>
+				<p>
+					<label for="products">Choose a product:</label> 
+					<select name="productId" id="productId">
+						<option th:each="p : ${products}" th:value="${p.id}"
+							th:text="${p.id + '. ' + p.name}"></option>
+					</select>
+				</p>
+				<p>
+					Date: <input type="date" name="date"
+						th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+						placeholder="yyyy-mm-dd" required />
+				</p>
+
+				
+
+
+				<input type="submit" name="Update Date">
+			</fieldset>
+		</form>
+	</div>
+	
+	<div>
+		<p>Add product's marketing question</p>
+		<form action="#" th:action="@{/CreateQuestion}" method="POST">
+			<fieldset>
+				<p>
+					<label for="products">Choose a product:</label> 
+					<select name="productId" id="productId">
+						<option th:each="p : ${products}" th:value="${p.id}"
+							th:text="${p.id + '. ' + p.name}"></option>
+					</select>
+				</p>
+				<p>
+					Marketing question: <input type="text" name="question" required />
+				</p>
+
+				<input type="submit" name="Add Question">
+			</fieldset>
+		</form>
+	</div>
+
+</body>
+</html>

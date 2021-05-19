@@ -25,7 +25,7 @@ public class Question implements Serializable {
 
 	// Bidirectional one-to-many association to Review
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
-	private List<Review> reviews;
+	private List<Answer> reviews;
 	
 	// Bi-directional many-to-one association to Product. Question is the owner
 	// entity
@@ -65,18 +65,18 @@ public class Question implements Serializable {
 		this.product = product;
 	}
 
-	public List<Review> getReviews() {
+	public List<Answer> getReviews() {
 		return this.reviews;
 	}
 
-	public void addReview(Review review) {
+	public void addReview(Answer review) {
 		getReviews().add(review);
 		review.setQuestion(this);
 		// aligns both sides of the relationship
 		// if mission is new, invoking persist() on reporter cascades also to mission
 	}
 
-	public void removeReview(Review review) {
+	public void removeReview(Answer review) {
 		getReviews().remove(review);
 	}
 

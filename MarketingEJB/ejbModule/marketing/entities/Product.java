@@ -32,7 +32,7 @@ public class Product implements Serializable {
 	
 	// Bidirectional one-to-many association to Review
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private List<Review> reviews;
+	private List<Questionnaire> questionnaires;
 	
 	// Bidirectional one-to-many association to Question
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
@@ -42,10 +42,11 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(String n, String b, Date d) {
+	public Product(String n, String b, Date d, String i) {
 		this.name = n;
 		this.brand = b;
 		this.date = d;
+		this.image = i;
 	}
 
 
@@ -90,19 +91,17 @@ public class Product implements Serializable {
 		this.image = image;
 	}
 	
-	public List<Review> getReviews() {
-		return this.reviews;
+	public List<Questionnaire> getQuestionnaires() {
+		return this.questionnaires;
 	}
 
-	public void addReview(Review review) {
-		getReviews().add(review);
-		review.setProduct(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
+	public void addQuestionnaire(Questionnaire questionnaire) {
+		getQuestionnaires().add(questionnaire);
+		questionnaire.setProduct(this);
 	}
 
-	public void removeReview(Review review) {
-		getReviews().remove(review);
+	public void removeQuestionnaire(Questionnaire questionnaire) {
+		getQuestionnaires().remove(questionnaire);
 	}
 	
 	public List<Question> getQuestions() {

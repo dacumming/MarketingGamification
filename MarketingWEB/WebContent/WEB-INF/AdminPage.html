@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Page</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<h1>Welcome to the Admin Application</h1>
+
+	
+	<div>
+		<a th:href="@{/AdminCreation}">Go to CREATION page</a>
+	</div>
+	<div>
+		<a th:href="@{/AdminInspection}">Go to INSPECTION page</a>
+	</div>
+	<div>
+		<a th:href="@{/AdminDeletion}">Go to DELETION page</a>
+	</div>
+	
+
+
+</body>
+</html>

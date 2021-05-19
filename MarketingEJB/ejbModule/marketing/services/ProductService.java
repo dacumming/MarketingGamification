@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
+import marketing.exceptions.UpdateDateException;
 import marketing.exceptions.ProductException;
 
 import javax.persistence.NonUniqueResultException;
@@ -24,22 +25,17 @@ public class ProductService {
 
 	public ProductService() {
 	}
-
-	// If a mission is deleted by a concurrent transaction this method retrieves it
-	// from the cache. If a mission is deleted by the JPA application, the
-	// persistence context evicts it, this method no longer
-	// retrieves it, and relationship sorting by the client works
 	
-
-	// If a mission is deleted by a concurrent transaction this method
-	// bypasses the cache and sees the correct list. Sorting is done by the query
-	
+	public Product findProductById(int productId) {
+		Product product = em.find(Product.class, productId);
+		return product;
+	}
 	
 	public List<Product> findProductOfTheDay() {
 		List<Product> products = em
 				.createQuery("Select p from Product p where p.date = current_date", Product.class)
 				.getResultList();
-		System.out.println(products);
+
 		return products;
 	}
 	
@@ -53,6 +49,14 @@ public class ProductService {
 
 		}
 		return products;
+	}
+	
+	public void updateDate(Product p) throws UpdateDateException {
+		try {
+			em.merge(p);
+		} catch (PersistenceException e) {
+			throw new UpdateDateException("Could not change profile");
+		}
 	}
 	
 
