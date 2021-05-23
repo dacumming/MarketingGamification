@@ -50,6 +50,15 @@ public class User implements Serializable {
 	private List<UserLogin> userlogins;
 	
 	public User() {
+		
+	}
+	
+	public User(String nusername, String npwd, String nemail) {
+		this.username = nusername;
+		this.password = npwd;
+		this.email = nemail;
+		this.points = 0;
+		this.isbanned = 0;
 	}
 
 	public int getId() {

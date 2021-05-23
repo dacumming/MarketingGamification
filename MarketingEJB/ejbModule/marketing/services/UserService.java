@@ -5,18 +5,25 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
-import javax.persistence.NonUniqueResultException;
 import marketing.entities.User;
+
+import javax.persistence.NonUniqueResultException;
 import marketing.entities.UserLogin;
 import marketing.exceptions.*;
+
 import java.util.List;
 
 @Stateless
 public class UserService {
 	@PersistenceContext(unitName = "MarketingEJB")
 	private EntityManager em;
+	
+	public void createUser(String nusername, String npwd, String nemail) {
+		User user = new User(nusername, npwd, nemail);
+		
+		em.persist(user); // makes also user object managed via cascading
+		
 
-	public UserService() {
 	}
 
 	public User checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException {
