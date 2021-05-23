@@ -11,8 +11,9 @@
 <h3>Registration page to the marketing gamification application</h3>
 
 	<form action="RegisterUser" method="POST">
-		New Username: <input type="text" name="username" required> <br>
-		New Password: <input type="password" name="pwd" required><br>
+		New Username: <input type="text" name="nusername" required> <br>
+		New Password: <input type="password" name="npwd" required><br>
+		e-mail: <input type="text" name="nemail" required>
 		<p th:text=" ${errorMsg}"></p>
 		<div></div>
 		<input type="submit" value="register">
