@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<div align="right">
+		<a th:href="@{/index.html}">Return</a>
+	</div>
+<h3>Registration page to the marketing gamification application</h3>
+
+	<form action="RegisterUser" method="POST">
+		New Username: <input type="text" name="username" required> <br>
+		New Password: <input type="password" name="pwd" required><br>
+		<p th:text=" ${errorMsg}"></p>
+		<div></div>
+		<input type="submit" value="register">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+</body>
+</html>

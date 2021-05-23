@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Login Page</title>
+<title>Index</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="/CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
 <h1>Welcome to the marketing gamification application</h1>
@@ -13,5 +15,9 @@
 		<input type="submit" value="login">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
+	<h3> New to the application?</h3>
+		<div>
+			<a href="/MarketingWEB/Register">Register</a>
+		</div>
 </body>
 </html>
