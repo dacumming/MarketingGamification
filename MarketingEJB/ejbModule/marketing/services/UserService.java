@@ -9,8 +9,10 @@ import marketing.entities.User;
 
 import javax.persistence.NonUniqueResultException;
 import marketing.entities.UserLogin;
+import marketing.entities.Questionnaire;
 import marketing.exceptions.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -47,4 +49,20 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
+	
+	public List<User> findUsersByDateQuestionnaire(Date q_date) {
+		List<Questionnaire> questionnaires = em
+				.createQuery("Select qa.user from Questionnaire qa where qa.date=:qdate", Questionnaire.class)
+				.setParameter("qdate", q_date).getResultList();
+		
+		System.out.println(questionnaires);
+		
+		List<User> users = em
+				.createQuery("Select u from User u", User.class)
+				.getResultList();
+
+		return users;
+	}
+	
+	
 }

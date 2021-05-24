@@ -8,14 +8,23 @@
 </head>
 <body>
 <div align="right">
-		<a th:href="@{/AdminPage}">Back</a>
+		<a th:href="@{/AdminPage}">Return</a>
 	</div>
 	<h1>Admin INSPECTION Page</h1>
 
 	
-	<div>
-		<p>Hola</p>
-	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Questionnaire dates</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="qd : ${q_dates}">
+				<td th:text="${#dates.format(qd, 'dd-MMM-yyyy')}"></td>
+			</tr>
+		</tbody>
+	</table>
 	
 
 

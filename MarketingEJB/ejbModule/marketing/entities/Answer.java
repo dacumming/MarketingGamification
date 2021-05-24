@@ -15,6 +15,8 @@ public class Answer implements Serializable {
 	private int id;
 
 	private String answer;
+	
+	private String questiontext;
 
 	@ManyToOne
 	@JoinColumn(name = "questionnaire")
@@ -27,8 +29,9 @@ public class Answer implements Serializable {
 	public Answer() {
 	}
 
-	public Answer(String answer, Question question, Questionnaire questionnaire) {
+	public Answer(String answer, String questiontext, Question question, Questionnaire questionnaire) {
 		this.answer = answer;
+		this.questiontext = questiontext;
 		this.question = question;
 		this.questionnaire = questionnaire;
 	}
@@ -49,7 +52,15 @@ public class Answer implements Serializable {
 		this.answer = answer;
 	}
 	
+	public String getQuestionText() {
+		return this.questiontext;
+	}
 
+	public void setQuestionText(String questiontext) {
+		this.questiontext = questiontext;
+	}
+	
+	
 	public Question getQuestion() {
 		return this.question;
 	}

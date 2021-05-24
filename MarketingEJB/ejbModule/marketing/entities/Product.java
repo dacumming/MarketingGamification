@@ -111,8 +111,6 @@ public class Product implements Serializable {
 	public void addQuestion(Question question) {
 		getQuestions().add(question);
 		question.setProduct(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
 	}
 
 	public void removeQuestion(Question question) {
