@@ -62,13 +62,13 @@ public class GoToInspectionPage extends HttpServlet {
 			return;
 		}
 		List<Questionnaire> q_dates = null;
-		List<User> users = null;
+
 		LocalDate localdate = LocalDate.of( 2021 , 5 , 16 );
 		ZoneId defaultZoneId = ZoneId.systemDefault();
         Date qdate = Date.from(localdate.atStartOfDay(defaultZoneId).toInstant());
 		try {
 			q_dates = qaService.findQuestionnaireDates();
-			users = uService.findUsersByDateQuestionnaire(qdate);
+//			users = uService.findUsersByDateQuestionnaire(qdate);
 			
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
@@ -79,6 +79,7 @@ public class GoToInspectionPage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("q_dates", q_dates);
+
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

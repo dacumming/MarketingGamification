@@ -50,19 +50,7 @@ public class UserService {
 
 	}
 	
-	public List<User> findUsersByDateQuestionnaire(Date q_date) {
-		List<Questionnaire> questionnaires = em
-				.createQuery("Select qa.user from Questionnaire qa where qa.date=:qdate", Questionnaire.class)
-				.setParameter("qdate", q_date).getResultList();
-		
-		System.out.println(questionnaires);
-		
-		List<User> users = em
-				.createQuery("Select u from User u", User.class)
-				.getResultList();
-
-		return users;
-	}
+	
 	
 	
 }

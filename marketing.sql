@@ -68,7 +68,7 @@ CREATE TABLE `questionnaire` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'2021-05-15',0,2,1),(2,'2021-05-15',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2);
+INSERT INTO `questionnaire` VALUES (1,'2021-05-22',0,2,1),(2,'2021-03-01',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2),(9,'2021-05-16',0,3,1),(10,'2021-05-17',0,2,1),(12,'2021-05-17',1,3,1);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +141,7 @@ CREATE TABLE `answer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,'not bad','do you like the product?',1,1),(2,'duck off','do you like the product?',2,1),(3,'get your ship out of here!','do you like the product?',3,1),(4,'could be better','do you like the product?',4,2),(5,'i liked it','do you like the product?',5,1),(6,'I hated it','do you like the product?',6,1),(7,'what the heck','do you like the product?',1,3),(8,'mmm...','do you like the product?',7,1),(9,'va bene','do you like the product?',8,1),(10,'mamma mia','do you like the product?',8,4);
+INSERT INTO `answer` VALUES (1,'not bad','do you like the product?',1,1),(2,'duck off','do you like the product?',2,1),(3,'get your ship out of here!','do you like the product?',3,1),(4,'could be better','do you like the product?',8,2),(5,'i liked it','do you like the product?',7,1),(6,'I hated it','do you like the product?',8,1),(7,'what the heck','do you like the product?',1,3),(8,'mmm...','do you like the product?',7,1),(9,'va bene','do you like the product?',8,1),(10,'mamma mia','do you like the product?',8,4);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
