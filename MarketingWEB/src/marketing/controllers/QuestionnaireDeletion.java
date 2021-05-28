@@ -26,24 +26,22 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import marketing.entities.*;
 import marketing.services.ProductService;
 import marketing.services.QuestionnaireService;
-import marketing.services.AnswerService;
-import marketing.services.UserDataService;
+import marketing.services.UserService;
+import marketing.exceptions.BadQuestionnaireDelete;
 
 
-@WebServlet("/QuestionnaireInspection")
-public class QuestionnaireInspection extends HttpServlet {
+@WebServlet("/QuestionnaireDeletion")
+public class QuestionnaireDeletion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "marketing.services/ProductService")
 	private ProductService pService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-	@EJB(name = "marketing.services/AnswerService")
-	private AnswerService aService;
-	@EJB(name = "marketing.services/UserDataService")
-	private UserDataService udService;
+	@EJB(name = "marketing.services/UserService")
+	private UserService uService;
 
-    public QuestionnaireInspection() {
+    public QuestionnaireDeletion() {
         super();
     }
 
@@ -56,7 +54,28 @@ public class QuestionnaireInspection extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
     
-    
+    private int getDiscount(List<Answer> answers, UserData userdata) {
+    	int count = 0;
+    	if (userdata != null) {
+    	if (!userdata.getAnswer1().equals("")) {
+    		count = count + 2;
+    	}
+    	if (!userdata.getAnswer2().equals("")) {
+    		count = count + 2;
+    	}
+    	if (!userdata.getAnswer3().equals("")) {
+    		count = count + 2;
+    	}
+    	}
+    	if (answers != null) {
+    	for (int i = 0; i < answers.size(); i++) {
+    		if (!answers.get(i).getAnswer().equals("")) {
+    			count = count + 1;
+    		}
+        }
+    	}
+		return count;
+	}
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -72,14 +91,15 @@ public class QuestionnaireInspection extends HttpServlet {
 		Date qdate = null;
 		List<Questionnaire> q_dates = null;
 		String user_selection = null;
-		List<Questionnaire> s_qa = null;
-		List<Questionnaire> c_qa = null;
-		List<Answer> s_a = null;
-		List<Answer> c_a = null;
-		List<UserData> ud = null;
+		List<Questionnaire> questionnaires = null;
+		String error_msg = null;
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 		String dt = null;
+		User user = null;
+		UserData userdata = null;
+		List<Answer> answers = null;
+		int oldPoints = 0;
 		try {
 			q_dates = qaService.findQuestionnaireDates();
 			user_selection = StringEscapeUtils.escapeJava(request.getParameter("qaStr"));
@@ -90,18 +110,35 @@ public class QuestionnaireInspection extends HttpServlet {
 			dt = sdf.format(c.getTime());
 			qdate=sdf.parse(dt); 
 			prodId = Integer.parseInt(separated[1]);
-			s_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 0);
-			c_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 1);
-			s_a = aService.findAnswerFromQuestionnaire(s_qa);
-			c_a = aService.findAnswerFromQuestionnaire(c_qa);
-			ud = udService.findUserDataFromQuestionnaire(s_qa);
-			System.out.println(ud);
+			
+			
+			questionnaires = qaService.findQuestionnairesByDateProduct(qdate, prodId);
+			if (!questionnaires.isEmpty()) {
+			for (int i = 0; i < questionnaires.size(); i++) {
+				user = questionnaires.get(i).getUser();
+				userdata = questionnaires.get(i).getUserData();
+				answers = questionnaires.get(i).getAnswers();
+				oldPoints = user.getPoints();
+				user.setPoints(oldPoints - getDiscount(answers, userdata));
+				uService.updatePoints(user);
+				qaService.deleteQuestionnaire(questionnaires.get(i).getId());
+	        }
+			}
+			
+			
+			
+			
+
 		} catch (ParseException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
+		} catch (BadQuestionnaireDelete e) {
+			e.printStackTrace();
+			error_msg = "Deletion should be possible only for a date preceding the current date.";
+			date_aux = null;
+			
 		}
 		
-		// return the user to the right view
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -109,12 +146,8 @@ public class QuestionnaireInspection extends HttpServlet {
 		ctx.setVariable("selected_date", date_aux);
 		ctx.setVariable("selected_product_id", prodId);
 		ctx.setVariable("selected_product_name", pService.findProductById(prodId).getName());
-		ctx.setVariable("s_qa", s_qa);
-		ctx.setVariable("c_qa", c_qa);
-		ctx.setVariable("s_a", s_a);
-		ctx.setVariable("c_a", c_a);
-		ctx.setVariable("ud", ud);
-		String path = "/WEB-INF/AdminInspection.html";
+		ctx.setVariable("error_msg", error_msg);
+		String path = "/WEB-INF/AdminDeletion.html";
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

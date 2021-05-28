@@ -2,7 +2,6 @@ package marketing.controllers;
 
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.EJB;

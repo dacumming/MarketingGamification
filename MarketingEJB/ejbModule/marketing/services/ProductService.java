@@ -2,9 +2,7 @@ package marketing.services;
 
 
 import java.util.List;
-import java.util.Date;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,10 +11,7 @@ import javax.persistence.PersistenceException;
 import marketing.exceptions.UpdateDateException;
 import marketing.exceptions.ProductException;
 
-import javax.persistence.NonUniqueResultException;
-
 import marketing.entities.Product;
-import marketing.entities.User;
 
 @Stateless
 public class ProductService {

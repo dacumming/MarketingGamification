@@ -13,11 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import marketing.entities.*;
 import marketing.services.ProductService;
-
 
 @WebServlet("/SetDateProduct")
 public class SetDateProduct extends HttpServlet {
