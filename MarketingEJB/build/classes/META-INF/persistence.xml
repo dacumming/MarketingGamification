@@ -4,6 +4,7 @@
 		<jta-data-source>MarketingResource</jta-data-source>
 		<class>marketing.entities.Product</class>
 		<class>marketing.entities.Question</class>
+		<class>marketing.entities.Questionnaire</class>
 		<class>marketing.entities.User</class>
 		<class>marketing.entities.Answer</class>
 		<class>marketing.entities.UserData</class>
