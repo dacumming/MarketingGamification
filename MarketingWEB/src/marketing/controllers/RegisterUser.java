@@ -38,15 +38,8 @@ public class RegisterUser extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
     
-
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-				
-		String path = "/WEB-INF/userregistered.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
@@ -57,6 +50,8 @@ public class RegisterUser extends HttpServlet {
 		String usr = null;
 		String pass = null;
 		String email = null;
+		int users = 0;
+		
 		try {
 			usr = StringEscapeUtils.escapeJava(request.getParameter("nusername"));
 			pass = StringEscapeUtils.escapeJava(request.getParameter("npwd"));
@@ -67,18 +62,39 @@ public class RegisterUser extends HttpServlet {
 			isBadRequest = true;
 			e.printStackTrace();
 		}
+			
+		try {
+			users = uService.findUserByUser(usr, email);
+		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create user");
+		}
+		
 		if (isBadRequest) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
 			return;
 		}
+		if (users == 0) {
+			try {
+				uService.createUser(usr, pass, email);
+			} catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create user");
+				return;
+			}
 
-		try {
-			uService.createUser(usr, pass, email);
-		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create user");
-			return;
+			String path = "/WEB-INF/userregistered.html";
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			templateEngine.process(path, ctx, response.getWriter());
+			
+		}else {
+
+			String path = "/WEB-INF/UserExists.html";
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			templateEngine.process(path, ctx, response.getWriter());
+			
 		}
-
+		
 
 	}
 }	

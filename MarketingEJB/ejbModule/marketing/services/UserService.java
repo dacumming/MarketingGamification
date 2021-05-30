@@ -22,8 +22,21 @@ public class UserService {
 		User user = new User(nusername, npwd, nemail);
 		
 		em.persist(user); // makes also user object managed via cascading
-		
-
+	}
+	
+	public int findUserByUser(String usr, String email) throws UsernameException {
+		List<User> users = null;
+		try {
+			users = em.createNamedQuery("User.checkUsernames", User.class).setParameter(1, usr).setParameter(2, email).getResultList();
+			//System.out.println(users);
+			if (users.isEmpty()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}catch (PersistenceException e) {
+			throw new UsernameException("Username already exists");
+		}
 	}
 
 	public User checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException {
@@ -47,4 +60,5 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
+
 }
