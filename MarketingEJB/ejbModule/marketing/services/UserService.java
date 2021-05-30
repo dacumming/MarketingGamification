@@ -9,10 +9,8 @@ import marketing.entities.User;
 
 import javax.persistence.NonUniqueResultException;
 import marketing.entities.UserLogin;
-import marketing.entities.Questionnaire;
 import marketing.exceptions.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -24,8 +22,21 @@ public class UserService {
 		User user = new User(nusername, npwd, nemail);
 		
 		em.persist(user); // makes also user object managed via cascading
-		
-
+	}
+	
+	public int findUserByUser(String usr, String email) throws UsernameException {
+		List<User> users = null;
+		try {
+			users = em.createNamedQuery("User.checkUsernames", User.class).setParameter(1, usr).setParameter(2, email).getResultList();
+			//System.out.println(users);
+			if (users.isEmpty()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}catch (PersistenceException e) {
+			throw new UsernameException("Username already exists");
+		}
 	}
 
 	public User checkCredentials(String usrn, String pwd) throws CredentialsException, NonUniqueResultException {
@@ -49,20 +60,16 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
-	
-	public List<User> findUsersByDateQuestionnaire(Date q_date) {
-		List<Questionnaire> questionnaires = em
-				.createQuery("Select qa.user from Questionnaire qa where qa.date=:qdate", Questionnaire.class)
-				.setParameter("qdate", q_date).getResultList();
-		
-		System.out.println(questionnaires);
-		
-		List<User> users = em
-				.createQuery("Select u from User u", User.class)
-				.getResultList();
+<<<<<<< HEAD
 
-		return users;
+=======
+	
+	public void updatePoints(User user) {
+		em.merge(user);
 	}
 	
 	
+	
+	
+>>>>>>> d5caaae93d40075cb5b84006269728418062e6f0
 }

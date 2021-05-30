@@ -7,25 +7,66 @@
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
-<div align="right">
+	<div align="right">
 		<a th:href="@{/AdminPage}">Return</a>
 	</div>
 	<h1>Admin INSPECTION Page</h1>
 
-	
-	<table>
-		<thead>
-			<tr>
-				<th>Questionnaire dates</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="qd : ${q_dates}">
-				<td th:text="${#dates.format(qd, 'dd-MMM-yyyy')}"></td>
-			</tr>
-		</tbody>
-	</table>
-	
+
+	<div>
+		<p>Marketing Questionnaire Inspection</p>
+		<form action="#" th:action="@{/QuestionnaireInspection}" method="POST">
+			<fieldset>
+				<p>
+					<label for="q_dates">Choose a questionnaire:</label> <select
+						name="qaStr" id="qaStr"> 
+						<option th:each="qd : ${q_dates}"
+							th:value="${#dates.format(qd[0], 'dd-MMM-yyyy') + ',' + qd[1].id}"
+							th:text="${#dates.format(qd[0], 'dd-MMM-yyyy') + ' - ' + qd[1].id + '. ' + qd[1].name}"></option>
+					</select>
+				</p>
+
+				<input type="submit" name="Inspect Questionnaire">
+			</fieldset>
+			<br>
+
+		</form>
+
+		<div th:if="${s_qa != null || c_qa != null}">
+			<h2 th:text="${'Selected Questionnaire: ' + #dates.format(selected_date, 'dd-MMM-yyyy') + ' - ' + selected_product_id + '. ' + selected_product_name}" ></h2>
+			
+			<h3 th:if="${!s_qa.isEmpty()}">List of Users
+				who submitted the Questionnaire</h3>
+			<h3 th:unless="${!s_qa.isEmpty()}">Nobody submitted the Questionnaire</h3>
+			<ul>
+				<li th:each="qa : ${s_qa}" th:text="${qa.user.username}">      			
+				</li>
+				
+				
+				<ul>
+         			<li th:each="a : ${s_a}" th:utext="${'Q: ' + a.questiontext + '&lt;br /&gt;' + 'A: ' + a.answer}"></li>
+      			</ul>
+				<ul th:each="udata : ${ud}">
+         			<li th:utext="${'Q: Age &lt;br /&gt;' + 'A: ' + udata.answer1}"></li>
+         			<li th:utext="${'Q: Sex &lt;br /&gt;' + 'A: ' + udata.answer2}"></li>
+         			<li th:utext="${'Q: Expertise Level &lt;br /&gt;' + 'A: ' + udata.answer3}"></li>
+      			</ul>
+				
+			</ul>
+			<h3 th:if="${!c_qa.isEmpty()}">List of Users
+				who cancelled the Questionnaire</h3>
+			<h3 th:unless="${!c_qa.isEmpty()}">Nobody cancelled the Questionnaire</h3>
+
+			<ul>
+				<li th:each="qa : ${c_qa}" th:text="${qa.user.username}"></li>
+			</ul>
+
+		</div>
+
+
+	</div>
+
+
 
 
 </body>

@@ -14,7 +14,34 @@
 
 	
 	<div>
-		<p>Hola</p>
+		<p>Marketing Questionnaire Deletion</p>
+		<form action="#" th:action="@{/QuestionnaireDeletion}" method="POST">
+			<fieldset>
+				<p>
+					<label for="q_dates">Choose a questionnaire:</label> <select
+						name="qaStr" id="qaStr"> 
+						<option th:each="qd : ${q_dates}"
+							th:value="${#dates.format(qd[0], 'dd-MMM-yyyy') + ',' + qd[1].id}"
+							th:text="${#dates.format(qd[0], 'dd-MMM-yyyy') + ' - ' + qd[1].id + '. ' + qd[1].name}"></option>
+					</select>
+				</p>
+
+				<input type="submit" name="Delete Questionnaie">
+			</fieldset>
+			<br>
+
+		</form>
+
+		
+
+
+	</div>
+	<div th:if="${selected_date != null}">
+			<h2 th:text="${'Deleted Questionnaire: ' + #dates.format(selected_date, 'dd-MMM-yyyy') + ' - ' + selected_product_id + '. ' + selected_product_name}" ></h2>
+	</div>
+	
+	<div th:if="${error_msg != null}">
+			<h2 th:text="${error_msg}" ></h2>
 	</div>
 	
 

@@ -4,8 +4,10 @@ package marketing.entities;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
+
 import java.util.Date;
-import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "questionnaire", schema = "marketingdb")
@@ -30,6 +32,12 @@ public class Questionnaire implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;
+	
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
+	private UserData userdata;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Answer> answers;
 
 	public Questionnaire() {
 	}
@@ -79,6 +87,29 @@ public class Questionnaire implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	public UserData getUserData() {
+		return this.userdata;
+	}
+
+	public void setUserData(UserData userdata) {
+		this.userdata = userdata;
+	}
+	
+	public List<Answer> getAnswers() {
+		return this.answers;
+	}
+
+	public void addAnswer(Answer answer) {
+		getAnswers().add(answer);
+		answer.setQuestionnaire(this);
+		// aligns both sides of the relationship
+		// if mission is new, invoking persist() on reporter cascades also to mission
+	}
+
+	public void removeAnswer(Answer answer) {
+		getAnswers().remove(answer);
 	}
 
 }

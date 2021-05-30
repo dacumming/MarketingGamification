@@ -1,8 +1,6 @@
 package marketing.controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -19,12 +17,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.entities.Product;
-import marketing.entities.User;
+
 import marketing.entities.Questionnaire;
 import marketing.services.QuestionnaireService;
-import marketing.services.UserService;
-import java.util.Date;
 
 /**
  * Servlet implementation class GoToInspectionPage
@@ -35,8 +30,7 @@ public class GoToInspectionPage extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-	@EJB(name = "marketing.services/UserService")
-	private UserService uService;
+	
 	
     public GoToInspectionPage() {
         super();
@@ -62,13 +56,9 @@ public class GoToInspectionPage extends HttpServlet {
 			return;
 		}
 		List<Questionnaire> q_dates = null;
-		List<User> users = null;
-		LocalDate localdate = LocalDate.of( 2021 , 5 , 16 );
-		ZoneId defaultZoneId = ZoneId.systemDefault();
-        Date qdate = Date.from(localdate.atStartOfDay(defaultZoneId).toInstant());
+
 		try {
 			q_dates = qaService.findQuestionnaireDates();
-			users = uService.findUsersByDateQuestionnaire(qdate);
 			
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
@@ -79,6 +69,7 @@ public class GoToInspectionPage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("q_dates", q_dates);
+
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

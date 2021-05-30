@@ -1,17 +1,11 @@
 package marketing.services;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 
 import marketing.entities.Question;
 import marketing.entities.Product;
-import marketing.exceptions.ProductException;
-import marketing.exceptions.UpdateDateException;
 
 @Stateless
 public class QuestionService {
