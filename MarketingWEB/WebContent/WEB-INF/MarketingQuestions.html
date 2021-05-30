@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Marketing Questions of </title>
+</head>
+<body>
+<div align="right">
+		<a th:href="@{/index.html}">Return</a>
+	</div>
+<h3>Please answer the following mandatory questions</h3>
+
+	<form action="RegisterUser" method="POST">
+		New Username: <input type="text" name="nusername" required> <br>
+		New Password: <input type="password" name="npwd" required><br>
+		e-mail: <input type="text" name="nemail" required>
+		<p th:text=" ${errorMsg}"></p>
+		<div></div>
+		<input type="submit" value="register">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+</body>
+</html>
