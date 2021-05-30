@@ -1,9 +1,6 @@
 package marketing.controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,8 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import marketing.entities.Product;
-import marketing.services.ProductService;
 import marketing.services.QuestionService;
 
 @WebServlet("/CreateQuestion")

@@ -3,6 +3,7 @@ package marketing.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.entities.Product;
+
+import marketing.entities.Questionnaire;
+import marketing.services.QuestionnaireService;
 
 /**
  * Servlet implementation class GoToInspectionPage
@@ -25,7 +28,10 @@ import marketing.entities.Product;
 public class GoToInspectionPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-
+	@EJB(name = "marketing.services/QuestionnaireService")
+	private QuestionnaireService qaService;
+	
+	
     public GoToInspectionPage() {
         super();
     }
@@ -49,12 +55,21 @@ public class GoToInspectionPage extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		List<Product> products = null;
+		List<Questionnaire> q_dates = null;
+
+		try {
+			q_dates = qaService.findQuestionnaireDates();
+			
+		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
+			return;
+		}
 		
 		String path = "/WEB-INF/AdminInspection.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("products", products);
+		ctx.setVariable("q_dates", q_dates);
+
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

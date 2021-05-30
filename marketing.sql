@@ -33,7 +33,7 @@ CREATE TABLE `usertable` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `usertable` WRITE;
 /*!40000 ALTER TABLE `usertable` DISABLE KEYS */;
-INSERT INTO `usertable` VALUES (1,'admin','1234','admin@mail.com',0,0),(2,'user1','pass1','user1@mail.com',0,0),(3,'user2','pass2','user2@mail.com',0,0);
+INSERT INTO `usertable` VALUES (1,'admin','1234','admin@mail.com',0,0),(2,'user1','pass1','user1@mail.com',2,0),(3,'user2','pass2','user2@mail.com',10,0);
 /*!40000 ALTER TABLE `usertable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,14 +61,14 @@ CREATE TABLE `questionnaire` (
   `product` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `q_user_idx` (`user`),
-  KEY `q_product_idx` (`user`),
+  KEY `q_product_idx` (`product`),
   CONSTRAINT `q_user` FOREIGN KEY (`user`) REFERENCES `usertable` (`id`),
   CONSTRAINT `q_product` FOREIGN KEY (`product`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'2021-05-15',0,2,1),(2,'2021-05-15',1,3,1),(3,'2021-05-15',0,2,2),(4,'2021-05-15',0,3,2),(5,'2021-05-16',0,2,1),(6,'2021-05-16',0,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2);
+INSERT INTO `questionnaire` VALUES (1,'2021-05-22',0,2,1),(2,'2021-05-28',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2),(9,'2021-05-16',0,3,1),(10,'2021-05-17',0,2,1),(12,'2021-05-17',1,3,1);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,7 +106,7 @@ CREATE TABLE `userdata` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `userdata` WRITE;
 /*!40000 ALTER TABLE `userdata` DISABLE KEYS */;
-INSERT INTO `userdata` VALUES (1,'23','F','High',1),(2,'33','M','Medium',3),(3,'30','F','Low',4),(4,'20','M','High',5),(5,'26','F','Medium',6),(6,'40','M','Low',8);
+INSERT INTO `userdata` VALUES (1,'23','F','High',1),(6,'40','','Low',8);
 /*!40000 ALTER TABLE `userdata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,8 +129,9 @@ DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `answer` varchar(300) NOT NULL,
+  `questiontext` varchar(200) NOT NULL,
   `questionnaire` int NOT NULL,
-  `question` int NOT NULL,
+  `question` int,
   PRIMARY KEY (`id`),
   KEY `review_questionnaire_idx` (`questionnaire`),
   KEY `review_question_idx` (`question`),
@@ -140,7 +141,7 @@ CREATE TABLE `answer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,'not bad',1,1),(2,'duck off',2,1),(3,'get your ship out of here!',3,1),(4,'could be better',4,2),(5,'i liked it',5,1),(6,'I hated it',6,1),(7,'what the heck',1,3),(8,'mmm...',7,1),(9,'va bene',8,1),(10,'mamma mia',8,4);
+INSERT INTO `answer` VALUES (1,'not bad','do you like the product?',1,1),(2,'duck off','do you like the product?',2,1),(3,'get your ship out of here!','do you like the product?',3,1),(4,'could be better','do you like the product?',8,2),(5,'i liked it','do you like the product?',7,1),(6,'I hated it','do you like the product?',8,1),(7,'what the heck','do you like the product?',1,3),(8,'mmm...','do you like the product?',7,1),(9,'va bene','do you like the product?',8,1),(10,'mamma mia','do you like the product?',8,4);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
