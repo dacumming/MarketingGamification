@@ -29,11 +29,11 @@ public class Answer implements Serializable {
 	public Answer() {
 	}
 
-	public Answer(String answer, String questiontext, Question question, Questionnaire questionnaire) {
+	public Answer(String answer, String questiontext, Question question) {
 		this.answer = answer;
 		this.questiontext = questiontext;
 		this.question = question;
-		this.questionnaire = questionnaire;
+		this.questionnaire = null;
 	}
 	
 	public int getId() {

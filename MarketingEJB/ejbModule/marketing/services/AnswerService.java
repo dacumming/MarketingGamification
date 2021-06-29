@@ -16,7 +16,14 @@ public class AnswerService {
 	@PersistenceContext(unitName = "MarketingEJB")
 	private EntityManager em;
 	
+<<<<<<< Updated upstream
 	
+=======
+	public void createAnswer(Answer answer, Questionnaire questionnaire) {
+		answer.setQuestionnaire(questionnaire);
+		em.persist(answer);
+	}
+>>>>>>> Stashed changes
 	  public List<Answer> findAnswerFromQuestionnaire(List<Questionnaire> qa_list) { 
 		  TypedQuery<Answer> query = em.createQuery("Select a from Answer a where a.questionnaire in :qalist order by a.questionnaire.date", Answer.class);
 		  List<Answer> answers = null;

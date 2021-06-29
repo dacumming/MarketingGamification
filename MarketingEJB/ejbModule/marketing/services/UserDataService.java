@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import javax.persistence.TypedQuery;
+
+import marketing.entities.Answer;
 import marketing.entities.Questionnaire;
 import marketing.entities.UserData;
 
@@ -17,6 +19,10 @@ public class UserDataService {
 	@PersistenceContext(unitName = "MarketingEJB")
 	private EntityManager em;
 	
+	public void createUserData(UserData userdata, Questionnaire questionnaire) {
+		userdata.setQuestionnaire(questionnaire);
+		em.persist(userdata);
+	}
 	
 	  public List<UserData> findUserDataFromQuestionnaire(List<Questionnaire> qa_list) { 
 		  TypedQuery<UserData> query = em.createQuery("Select ud from UserData ud where ud.questionnaire in :qalist order by ud.questionnaire.date", UserData.class);

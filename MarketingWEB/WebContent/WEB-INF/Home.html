@@ -26,9 +26,19 @@
 
 	
 	<div th:each="p : ${products}">
+<<<<<<< Updated upstream
     <span th:text="${'Product of the day: ' +  p.name}"></span><br />
     <span th:text="${'Brand: ' +  p.brand}"></span><br />
     <img th:src="${p.image}" >
+=======
+	    <span th:text="${'Product of the day: ' +  p.name}"></span><br />
+	    <span th:text="${'Brand: ' +  p.brand}"></span><br />
+	    <img th:src="${p.image}" >
+    </div>
+    
+   	<div>
+		<a th:href="@{/MarketingQuestions}">Fill questionnaire</a>
+>>>>>>> Stashed changes
 	</div>
 	
 

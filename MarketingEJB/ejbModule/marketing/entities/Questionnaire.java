@@ -36,7 +36,7 @@ public class Questionnaire implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
 	private UserData userdata;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 
 	public Questionnaire() {
@@ -104,8 +104,6 @@ public class Questionnaire implements Serializable {
 	public void addAnswer(Answer answer) {
 		getAnswers().add(answer);
 		answer.setQuestionnaire(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
 	}
 
 	public void removeAnswer(Answer answer) {

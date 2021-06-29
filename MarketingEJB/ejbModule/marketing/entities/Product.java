@@ -35,7 +35,7 @@ public class Product implements Serializable {
 	private List<Questionnaire> questionnaires;
 	
 	// Bidirectional one-to-many association to Question
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
 	private List<Question> questions;
 	
 

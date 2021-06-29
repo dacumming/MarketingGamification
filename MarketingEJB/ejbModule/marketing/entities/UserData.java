@@ -28,11 +28,11 @@ public class UserData implements Serializable {
 	public UserData() {
 	}
 
-	public UserData(String answer1, String answer2, String answer3, Questionnaire questionnaire) {
+	public UserData(String answer1, String answer2, String answer3) {
 		this.answer1 = answer1;
 		this.answer2 = answer2;
 		this.answer3 = answer3;
-		this.questionnaire = questionnaire;
+		this.questionnaire = null;
 	}
 
 

@@ -75,7 +75,6 @@ public class QuestionnaireInspection extends HttpServlet {
 		List<Questionnaire> s_qa = null;
 		List<Questionnaire> c_qa = null;
 		List<Answer> s_a = null;
-		List<Answer> c_a = null;
 		List<UserData> ud = null;
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -93,7 +92,6 @@ public class QuestionnaireInspection extends HttpServlet {
 			s_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 0);
 			c_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 1);
 			s_a = aService.findAnswerFromQuestionnaire(s_qa);
-			c_a = aService.findAnswerFromQuestionnaire(c_qa);
 			ud = udService.findUserDataFromQuestionnaire(s_qa);
 			System.out.println(ud);
 		} catch (ParseException e) {
@@ -112,7 +110,6 @@ public class QuestionnaireInspection extends HttpServlet {
 		ctx.setVariable("s_qa", s_qa);
 		ctx.setVariable("c_qa", c_qa);
 		ctx.setVariable("s_a", s_a);
-		ctx.setVariable("c_a", c_a);
 		ctx.setVariable("ud", ud);
 		String path = "/WEB-INF/AdminInspection.html";
 		templateEngine.process(path, ctx, response.getWriter());

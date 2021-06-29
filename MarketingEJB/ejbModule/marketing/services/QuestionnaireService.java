@@ -1,6 +1,7 @@
 package marketing.services;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,13 @@ import javax.persistence.TypedQuery;
 
 import marketing.entities.Questionnaire;
 import marketing.entities.User;
+<<<<<<< Updated upstream
+=======
+import marketing.entities.UserData;
+import marketing.entities.Answer;
+>>>>>>> Stashed changes
 import marketing.entities.Product;
+import marketing.entities.Question;
 import marketing.exceptions.BadQuestionnaireDelete;
 
 @Stateless
@@ -64,6 +71,12 @@ public class QuestionnaireService {
 
 		return questionnaires;
 	}
+	
+	
+	public void createQuestionnaire(Questionnaire questionnaire) {	
+		em.persist(questionnaire);
+	}
+	 
 	
 	public void deleteQuestionnaire(int qaId) throws BadQuestionnaireDelete {
 		Questionnaire questionnaire = em.find(Questionnaire.class, qaId);

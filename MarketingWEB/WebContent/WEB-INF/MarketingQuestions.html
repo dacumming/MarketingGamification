@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Marketing Questions</title>
+</head>
+<body>
+
+	<form action="#" th:action="@{/CreateQuestionnaire}" method="POST">
+	<div id="mandatory" style="display: block">
+		<div align="right">
+			<a th:href="@{/Home}">Return</a>
+		</div>
+		<h3>Please answer the following mandatory questions</h3>
+		<div th:each="q : ${questions}">
+		    <span th:text="${q.question}"></span><input type="text" th:name="|question_${q.id}|" required> <br><br />
+		</div>
+		<input type="button" value="next" onclick="showOptional()">
+	</div>
+	<div id="optional" style="display: block">
+		<div align="right">
+			<input type="button" value="return" onclick="showMandatory()">
+		</div>
+		<h3>Please answer the following optional questions</h3>
+		<p>
+		Age: <input name="age" type="number" id="age">
+		</p>
+		<br>
+		<label for="sex">Sex:</label>
+		  <select name="sex" id="sex">
+		  <option value=""></option>
+		    <option value="F">Female</option>
+		    <option value="M">Male</option>
+		  </select>
+		 <br>
+		 <label for="exp">Expertise Level:</label>
+		  <select name="exp" id="exp">
+		  <option value=""></option>
+		    <option value="L">Low</option>
+		    <option value="M">Medium</option>
+		    <option value="H">High</option>
+		  </select>
+		  
+		  
+		  
+		  <br><br>
+		  <input type="submit" value="Submit" name="Submit">
+		
+		
+		<!-- 
+		<button type="submit">Submit</button>
+		<button type="submit" formaction="CancelQuestionnaire">Cancel</button> -->
+	</div>
+
+		
+
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+
+	<script type="text/javascript">
+		let questType;
+		function showMandatory(){
+			let optional = document.getElementById("optional");
+			let mandatory = document.getElementById("mandatory");
+			optional.style = "display: none";
+			mandatory.style = "display: block";
+		}
+		function showOptional(){
+			let optional = document.getElementById("optional");
+			let mandatory = document.getElementById("mandatory");
+			optional.style = "display: block";
+			mandatory.style = "display: none";
+		}
+	</script>
+</body>
+</html>
+
