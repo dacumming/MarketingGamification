@@ -68,7 +68,7 @@ CREATE TABLE `questionnaire` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'2021-05-22',0,2,1),(2,'2021-05-28',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2),(9,'2021-05-16',0,3,1),(10,'2021-05-17',0,2,1),(12,'2021-05-17',1,3,1);
+INSERT INTO `questionnaire` VALUES (1,'2021-05-22',0,2,1),(2,'2021-05-30',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2),(9,'2021-05-16',0,3,1),(10,'2021-05-17',0,2,1),(12,'2021-05-17',1,3,1);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
