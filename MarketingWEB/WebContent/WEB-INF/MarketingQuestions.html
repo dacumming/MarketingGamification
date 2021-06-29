@@ -2,22 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Marketing Questions of </title>
+<title>Marketing Questions</title>
 </head>
 <body>
-<div align="right">
-		<a th:href="@{/index.html}">Return</a>
-	</div>
-<h3>Please answer the following mandatory questions</h3>
 
-	<form action="RegisterUser" method="POST">
-		New Username: <input type="text" name="nusername" required> <br>
-		New Password: <input type="password" name="npwd" required><br>
-		e-mail: <input type="text" name="nemail" required>
-		<p th:text=" ${errorMsg}"></p>
-		<div></div>
-		<input type="submit" value="register">
+	<form action="#" th:action="@{/CreateQuestionnaire}" method="GET">
+	<div id="mandatory" style="display: block">
+		<div align="right">
+			<a th:href="@{/index.html}">Return</a>
+		</div>
+		<h3>Please answer the following mandatory questions</h3>
+		<div th:each="q : ${questions}">
+		    <span th:text="${q.question}"></span><input type="text" name="${q.id}" required> <br><br />
+		</div>
+		<input type="button" value="next" onclick="showOptional()">
+	</div>
+	<div id="optional" style="display: none">
+		<div align="right">
+			<input type="button" value="return" onclick="showMandatory()">
+		</div>
+		<h3>Please answer the following optional questions</h3>
+		<div th:each="q : ${questions}">
+		    <span th:text="${q.question}"></span><input type="text" name="${q.id}"> <br><br />
+		</div>
+		<input type="submit" name="Submit">
+		
+		<!-- 
+		<button type="submit">Submit</button>
+		<button type="submit" formaction="CancelQuestionnaire">Cancel</button> -->
+	</div>
+
+		
+
 		<p th:text=" ${errorMsg}"></p>
 	</form>
+
+	<script type="text/javascript">
+		let questType;
+		function showMandatory(){
+			let optional = document.getElementById("optional");
+			let mandatory = document.getElementById("mandatory");
+			optional.style = "display: none";
+			mandatory.style = "display: block";
+		}
+		function showOptional(){
+			let optional = document.getElementById("optional");
+			let mandatory = document.getElementById("mandatory");
+			optional.style = "display: block";
+			mandatory.style = "display: none";
+		}
+	</script>
 </body>
 </html>
+

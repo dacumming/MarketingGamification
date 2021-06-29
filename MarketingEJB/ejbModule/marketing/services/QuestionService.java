@@ -1,5 +1,7 @@
 package marketing.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,5 +42,13 @@ public class QuestionService {
 
 	}
 	
+	public List<Question> findProductQuestions(Product product) { 
+		List<Question> questions = em
+				.createQuery("SELECT q FROM Question q WHERE q.product = :prod", Question.class)
+				.setParameter("prod", product)
+				.getResultList();
+
+		return questions;
+	}
 
 }

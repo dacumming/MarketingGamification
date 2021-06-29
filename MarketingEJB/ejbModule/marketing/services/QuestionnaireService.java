@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import marketing.entities.Questionnaire;
 import marketing.entities.User;
+import marketing.entities.Answer;
 import marketing.entities.Product;
 import marketing.exceptions.BadQuestionnaireDelete;
 
@@ -22,6 +23,12 @@ public class QuestionnaireService {
 	private EntityManager em;
 
 	public QuestionnaireService() {
+	}
+	
+	public void CreateQuestionnaire(User user, int iscanceled, Product product) {
+		Questionnaire questionnaire = new Questionnaire(user, iscanceled, product);
+		
+		em.persist(questionnaire); // makes also user object managed via cascading
 	}
 	
 	private Date getToday() {

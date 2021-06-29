@@ -60,16 +60,10 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
-<<<<<<< HEAD
-
-=======
+	
 	
 	public void updatePoints(User user) {
 		em.merge(user);
 	}
 	
-	
-	
-	
->>>>>>> d5caaae93d40075cb5b84006269728418062e6f0
 }
