@@ -14,11 +14,8 @@ import javax.persistence.TypedQuery;
 
 import marketing.entities.Questionnaire;
 import marketing.entities.User;
-<<<<<<< Updated upstream
-=======
 import marketing.entities.UserData;
 import marketing.entities.Answer;
->>>>>>> Stashed changes
 import marketing.entities.Product;
 import marketing.entities.Question;
 import marketing.exceptions.BadQuestionnaireDelete;
