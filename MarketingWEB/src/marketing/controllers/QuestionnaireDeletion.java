@@ -54,28 +54,7 @@ public class QuestionnaireDeletion extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
     
-    private int getDiscount(List<Answer> answers, UserData userdata) {
-    	int count = 0;
-    	if (userdata != null) {
-    	if (!userdata.getAnswer1().equals("")) {
-    		count = count + 2;
-    	}
-    	if (!userdata.getAnswer2().equals("")) {
-    		count = count + 2;
-    	}
-    	if (!userdata.getAnswer3().equals("")) {
-    		count = count + 2;
-    	}
-    	}
-    	if (answers != null) {
-    	for (int i = 0; i < answers.size(); i++) {
-    		if (!answers.get(i).getAnswer().equals("")) {
-    			count = count + 1;
-    		}
-        }
-    	}
-		return count;
-	}
+    
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -96,10 +75,6 @@ public class QuestionnaireDeletion extends HttpServlet {
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 		String dt = null;
-		User user = null;
-		UserData userdata = null;
-		List<Answer> answers = null;
-		int oldPoints = 0;
 		try {
 			q_dates = qaService.findQuestionnaireDates();
 			user_selection = StringEscapeUtils.escapeJava(request.getParameter("qaStr"));
@@ -115,12 +90,6 @@ public class QuestionnaireDeletion extends HttpServlet {
 			questionnaires = qaService.findQuestionnairesByDateProduct(qdate, prodId);
 			if (!questionnaires.isEmpty()) {
 			for (int i = 0; i < questionnaires.size(); i++) {
-				user = questionnaires.get(i).getUser();
-				userdata = questionnaires.get(i).getUserData();
-				answers = questionnaires.get(i).getAnswers();
-				oldPoints = user.getPoints();
-				user.setPoints(oldPoints - getDiscount(answers, userdata));
-				uService.updatePoints(user);
 				qaService.deleteQuestionnaire(questionnaires.get(i).getId());
 	        }
 			}
