@@ -79,17 +79,23 @@ public class CreateQuestionnaire extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
+		
+		User user = (User)session.getAttribute("user");		
 		List<Product> products = pService.findProductOfTheDay();
 		Product product_of_the_day = products.get(0);
-		List<Question> questions =product_of_the_day.getQuestions();
-		User user = (User)session.getAttribute("user");
-		
+		String feedback = null;
 		boolean isBadRequest = false;
+		String submitOption = StringEscapeUtils.escapeJava(request.getParameter("Submit"));
+		System.out.println(submitOption);
+		if(submitOption.equals("Submit")){
+		
+		List<Question> questions =product_of_the_day.getQuestions();		
 		String sex = null;
 		String age = null;
 		String exp = null;
-		Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day);
+		
 		try {
+			Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day);
 			qaService.createQuestionnaire(questionnaire);
 			sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
 			age = StringEscapeUtils.escapeJava(request.getParameter("age"));
@@ -101,36 +107,35 @@ public class CreateQuestionnaire extends HttpServlet {
 				Answer answer =  new Answer(answertext, questions.get(i).getQuestion(), questions.get(i));
 				aService.createAnswer(answer, questionnaire);
 			}
-
-			
 			
 		} catch (NumberFormatException | NullPointerException e) {
 			isBadRequest = true;
 			e.printStackTrace();
 		}
+		
+		feedback = "Thanks for filling the questionnaire";
+		
+		}else {
+			try {
+				Questionnaire questionnaire = new Questionnaire(user, 1, product_of_the_day);
+				qaService.createQuestionnaire(questionnaire);
+			}catch (NumberFormatException | NullPointerException e) {
+				isBadRequest = true;
+				e.printStackTrace();
+			}
+			
+			feedback = "Questionnaire cancelled";
+		}
+		
 		if (isBadRequest) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
 			return;
 		}
-		
-//		try {
-//			qService.createQuestion(question, productId);
-//		} catch (Exception e) {
-//			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create question");
-//			return;
-//		}
-		
-		
-		
-		
-		
-		
-		
+		String path = "/WEB-INF/Feedback.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		String path = "/WEB-INF/Feedback.html";
-		templateEngine.process(path, ctx, response.getWriter());
-		
+		ctx.setVariable("feedback", feedback);
+		templateEngine.process(path, ctx, response.getWriter());		
 	}
 
 	/**

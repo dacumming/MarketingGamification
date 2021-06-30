@@ -2,19 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Questionnaire Completed</title>
+<title>Leaderboard</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
-
-	<h1 th:text="${feedback}"></h1>
-	<br>
-<div align="left">
-	<a th:href="@{/Home}">Return to Home Page</a>
-</div>
+<div align="right">
+		<a th:href="@{/Home}">Return</a>
+	</div>
 	
-
-
+	<h1>Leaderboard</h1>
+<div th:each="lb : ${leaderboard}">
+    <span th:text="${lb}"></span><br />
+    </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
+import marketing.entities.Questionnaire;
 import marketing.entities.User;
 
 import javax.persistence.NonUniqueResultException;
@@ -22,6 +23,13 @@ public class UserService {
 		User user = new User(nusername, npwd, nemail);
 		
 		em.persist(user); // makes also user object managed via cascading
+	}
+	
+	public List<User> getUserById(int id) {
+		List<User> user_points = em
+				.createQuery("Select u from User u where u.id=:id", User.class)
+				.getResultList();
+		return user_points;
 	}
 	
 	public int findUserByUser(String usr, String email) throws UsernameException {
