@@ -87,13 +87,17 @@ public class GoToLeaderboard extends HttpServlet {
         ArrayList<String[]> leaderboard;
         leaderboard = new ArrayList<String[]>();
         List<Questionnaire> questionnaires_of_the_day = null;
+        Date date = null;
+        String currentDate = null;
+        String product_name = null;
         try {
 			List<Product> products = pService.findProductOfTheDay();
 			Product product_of_the_day = products.get(0);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy");
-	        Date date = new Date();
-	        String currentDate = dateFormat.format(date);
+	        date = new Date();
+	        currentDate = dateFormat.format(date);
 	        int prodId = product_of_the_day.getId();
+	        product_name = product_of_the_day.getName();
 	        System.out.println(date);
 	        System.out.println(currentDate);
 	        System.out.println(prodId);
@@ -137,6 +141,9 @@ public class GoToLeaderboard extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("leaderboard", leaderboard);
+		ctx.setVariable("date", date);
+		ctx.setVariable("current_date", currentDate);
+		ctx.setVariable("product_name", product_name);
 		templateEngine.process(path, ctx, response.getWriter());
 	
 	}

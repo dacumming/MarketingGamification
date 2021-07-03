@@ -1,4 +1,4 @@
-
+subtract_points_userdatasubtract_points_userdatasubtract_points_userdata
 
 delimiter //
 DROP TRIGGER IF EXISTS add_points_answer;
@@ -12,8 +12,7 @@ BEGIN
 		WHERE id=(SELECT user FROM questionnaire WHERE id=NEW.questionnaire AND iscanceled=0);
     END IF;
 END;
-
-delimiter //
+ 
 DROP TRIGGER IF EXISTS add_points_userdata;
 CREATE TRIGGER add_points_userdata
 AFTER INSERT
@@ -25,8 +24,7 @@ BEGIN
 		WHERE id=(SELECT user FROM questionnaire WHERE id=NEW.questionnaire AND iscanceled=0);
     END IF;
 END;
-
-delimiter //
+ 
 DROP TRIGGER IF EXISTS subtract_points_answer;
 CREATE TRIGGER subtract_points_answer
 AFTER DELETE
@@ -38,8 +36,7 @@ BEGIN
 		WHERE id=(SELECT user FROM questionnaire WHERE id=OLD.questionnaire AND iscanceled=0);
     END IF;
 END;
-
-delimiter //
+ 
 DROP TRIGGER IF EXISTS subtract_points_userdata;
 CREATE TRIGGER subtract_points_userdata
 AFTER DELETE

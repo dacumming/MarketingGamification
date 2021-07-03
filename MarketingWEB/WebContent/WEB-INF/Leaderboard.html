@@ -12,6 +12,8 @@
 	</div>
 	
 	<h1>Leaderboard</h1>
+	<h3 th:text="${product_name}"></h3>
+	<h3 th:text="${current_date}"></h3>
 <div th:each="lb : ${leaderboard}">
     <span th:text="${lb[0] + ' | ' + lb[1]}"></span><br />
     </div>
