@@ -13,7 +13,7 @@
 	
 	<h1>Leaderboard</h1>
 <div th:each="lb : ${leaderboard}">
-    <span th:text="${lb}"></span><br />
+    <span th:text="${lb[0] + ' | ' + lb[1]}"></span><br />
     </div>
 </body>
 </html>

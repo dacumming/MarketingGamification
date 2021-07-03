@@ -2,6 +2,9 @@ package marketing.controllers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import marketing.entities.*;
 import marketing.services.AnswerService;
@@ -52,6 +57,15 @@ public class GoToLeaderboard extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
+    public void init() throws ServletException {
+		ServletContext servletContext = getServletContext();
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		templateResolver.setTemplateMode(TemplateMode.HTML);
+		this.templateEngine = new TemplateEngine();
+		this.templateEngine.setTemplateResolver(templateResolver);
+		templateResolver.setSuffix(".html");
+	}
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +84,8 @@ public class GoToLeaderboard extends HttpServlet {
         User currentUser = null;
         int points = 0;
         boolean isBadRequest = false;
-        String [][] leaderboard = null;
+        ArrayList<String[]> leaderboard;
+        leaderboard = new ArrayList<String[]>();
         List<Questionnaire> questionnaires_of_the_day = null;
         try {
 			List<Product> products = pService.findProductOfTheDay();
@@ -84,25 +99,29 @@ public class GoToLeaderboard extends HttpServlet {
 	        System.out.println(prodId);
 	        System.out.println("***************************");
 	        questionnaires_of_the_day = qaService.findQuestionnairesByDateProduct(date, prodId);
-	        
-	        leaderboard = new String[questionnaires_of_the_day.size()][2];
+	        Collections.sort(questionnaires_of_the_day, new Comparator<Questionnaire>() {
+	            @Override
+	            public int compare(Questionnaire q1, Questionnaire q2) {
+	            	User currentUser1 = q1.getUser();
+		        	int points1 = currentUser1.getPoints();
+		        	User currentUser2 = q2.getUser();
+		        	int points2 = currentUser2.getPoints();
+		        	
+	                return points1 - points2;
+	            }
+	        }); 
 	        
 	        for (int i = 0; i < questionnaires_of_the_day.size(); i++) {
+	        	String[] row = new String[2];
 	        	questionnaire = questionnaires_of_the_day.get(i);
 	        	currentUser = questionnaire.getUser();
-	        	//leaderboard[i][1] = uService.getUserById(questionnaire.getUser());
-	        	points = currentUser.getPoints();
-	        	
-	        	if(i>0 && Integer.parseInt(leaderboard[i-1][2])<points) {
-	        		leaderboard[i][1] = leaderboard[i-1][1];
-	        		leaderboard[i][2] = leaderboard[i-1][2];
-	        		leaderboard[i-1][1] = currentUser.getUsername();
-	        		leaderboard[i-1][2] = Integer.toString(points);
-	        		
-	        	}else {
-		        	leaderboard[i][1] = currentUser.getUsername();	        	
-		        	leaderboard[i][2] = Integer.toString(points);
+	        	if (!existingUser(leaderboard, currentUser)) {
+	        		points = currentUser.getPoints();
+		        	row[0] = currentUser.getUsername();	        	
+		        	row[1] = Integer.toString(points);
+		        	leaderboard.add(row);
 	        	}
+	        	
 	        }
         }catch (NumberFormatException | NullPointerException e) {
 			isBadRequest = true;
@@ -121,6 +140,21 @@ public class GoToLeaderboard extends HttpServlet {
 		templateEngine.process(path, ctx, response.getWriter());
 	
 	}
+	
+	boolean existingUser(ArrayList<String[]> leaderboard, User currentUser) {
+		boolean exists = false;
+		int size = leaderboard.size();
+		String username = currentUser.getUsername();
+		for (int i = 0; i < size; i++) {
+			if (leaderboard.get(i)[0].equals(username)) {
+				exists = true;
+				return exists;
+			}
+		}
+			
+		
+		return exists;
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -128,6 +162,6 @@ public class GoToLeaderboard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
+	} 
 
 }
