@@ -86,7 +86,7 @@ CREATE TABLE `products` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'headphones','sony','2021-06-29','https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'),(2,'disk','toshiba','2021-05-16','https://images.unsplash.com/photo-1593448848024-77a27f0690b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');
+INSERT INTO `products` VALUES (1,'headphones','sony','2021-07-04','https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'),(2,'disk','toshiba','2021-05-16','https://images.unsplash.com/photo-1593448848024-77a27f0690b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +98,7 @@ CREATE TABLE `userdata` (
   `answer1` varchar(45) NOT NULL,
   `answer2` varchar(45) NOT NULL,
   `answer3` varchar(45) NOT NULL,
-  `questionnaire` int NOT NULL,
+  `questionnaire` int,
   PRIMARY KEY (`id`),
   KEY `answer_questionnaire_idx` (`questionnaire`),
   CONSTRAINT `answer_questionnaire` FOREIGN KEY (`questionnaire`) REFERENCES `questionnaire` (`id`)
@@ -135,7 +135,7 @@ CREATE TABLE `answer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `answer` varchar(300) NOT NULL,
   `questiontext` varchar(200) NOT NULL,
-  `questionnaire` int NOT NULL,
+  `questionnaire` int,
   `question` int,
   PRIMARY KEY (`id`),
   KEY `review_questionnaire_idx` (`questionnaire`),

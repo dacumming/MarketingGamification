@@ -4,6 +4,7 @@ package marketing.controllers;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +27,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import marketing.entities.*;
 import marketing.services.ProductService;
 import marketing.services.QuestionnaireService;
-import marketing.services.AnswerService;
-import marketing.services.UserDataService;
 
 
 @WebServlet("/QuestionnaireInspection")
@@ -38,10 +37,7 @@ public class QuestionnaireInspection extends HttpServlet {
 	private ProductService pService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-	@EJB(name = "marketing.services/AnswerService")
-	private AnswerService aService;
-	@EJB(name = "marketing.services/UserDataService")
-	private UserDataService udService;
+
 
     public QuestionnaireInspection() {
         super();
@@ -74,10 +70,10 @@ public class QuestionnaireInspection extends HttpServlet {
 		String user_selection = null;
 		List<Questionnaire> s_qa = null;
 		List<Questionnaire> c_qa = null;
-		List<Answer> s_a = null;
-		List<UserData> ud = null;
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		List<String> information = new ArrayList<String>();
+		List<Integer> isheader = new ArrayList<Integer>();
 		String dt = null;
 		try {
 			q_dates = qaService.findQuestionnaireDates();
@@ -85,15 +81,41 @@ public class QuestionnaireInspection extends HttpServlet {
 			separated = user_selection.split(",");
 			date_aux = sdf.parse(separated[0]);
 			c.setTime(date_aux);
-			c.add(Calendar.DATE, 1);
+			//c.add(Calendar.DATE, 1);
 			dt = sdf.format(c.getTime());
 			qdate=sdf.parse(dt); 
 			prodId = Integer.parseInt(separated[1]);
 			s_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 0);
 			c_qa = qaService.findQuestionnairesByDateProductIsCanceled(qdate, prodId, 1);
-			s_a = aService.findAnswerFromQuestionnaire(s_qa);
-			ud = udService.findUserDataFromQuestionnaire(s_qa);
-			System.out.println(ud);
+			for (int i = 0; i < s_qa.size(); i++) {
+				Questionnaire questionnaire =  s_qa.get(i);
+				information.add(questionnaire.getUser().getUsername());
+				isheader.add(1);
+				List<Answer> answers = questionnaire.getAnswers();
+				for (int j = 0; j < answers.size(); j++) {
+					Answer answer = answers.get(j);
+					information.add("Q: "+answer.getQuestionText());
+					isheader.add(0);
+					information.add("A: "+answer.getAnswer());
+					isheader.add(0);
+				}
+				
+				UserData userdata = questionnaire.getUserData();
+				information.add("Q: Sex");
+				isheader.add(0);
+				information.add("A: "+userdata.getAnswer1());
+				isheader.add(0);
+				information.add("Q: Age");
+				isheader.add(0);
+				information.add("A: "+userdata.getAnswer2());
+				isheader.add(0);
+				information.add("Q: Expertise Level");
+				isheader.add(0);
+				information.add("A: "+userdata.getAnswer3());
+				isheader.add(0);
+
+			}
+			
 		} catch (ParseException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
@@ -107,10 +129,9 @@ public class QuestionnaireInspection extends HttpServlet {
 		ctx.setVariable("selected_date", date_aux);
 		ctx.setVariable("selected_product_id", prodId);
 		ctx.setVariable("selected_product_name", pService.findProductById(prodId).getName());
-		ctx.setVariable("s_qa", s_qa);
+		ctx.setVariable("information", information);
+		ctx.setVariable("isheader", isheader);
 		ctx.setVariable("c_qa", c_qa);
-		ctx.setVariable("s_a", s_a);
-		ctx.setVariable("ud", ud);
 		String path = "/WEB-INF/AdminInspection.html";
 		templateEngine.process(path, ctx, response.getWriter());
 		

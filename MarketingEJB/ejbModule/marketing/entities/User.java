@@ -47,10 +47,10 @@ public class User implements Serializable {
 	 * detached changes to relationship.
 	 */
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Questionnaire> questionnaires;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade=CascadeType.PERSIST)
 	private List<UserLogin> userlogins;
 	
 	public User() {

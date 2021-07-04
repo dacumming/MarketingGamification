@@ -1,13 +1,7 @@
 package marketing.controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -32,9 +26,6 @@ import marketing.entities.User;
 import marketing.entities.Question;
 import marketing.entities.UserData;
 import marketing.services.ProductService;
-import marketing.services.QuestionService;
-import marketing.services.AnswerService;
-import marketing.services.UserDataService;
 import marketing.services.QuestionnaireService;
 
 /**
@@ -46,12 +37,6 @@ public class CreateQuestionnaire extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "marketing.services/ProductService")
 	private ProductService pService;
-	@EJB(name = "marketing.services/QuestionService")
-	private QuestionService qService;
-	@EJB(name = "marketing.services/AnswerService")
-	private AnswerService aService;
-	@EJB(name = "marketing.services/UserDataService")
-	private UserDataService udService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
 
@@ -89,24 +74,32 @@ public class CreateQuestionnaire extends HttpServlet {
 		System.out.println(submitOption);
 		if(submitOption.equals("Submit")){
 		
+		List<Answer> answers = new ArrayList<Answer>();
 		List<Question> questions =product_of_the_day.getQuestions();		
 		String sex = null;
 		String age = null;
 		String exp = null;
 		
 		try {
-			Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day);
-			qaService.createQuestionnaire(questionnaire);
+			
+			
 			sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
 			age = StringEscapeUtils.escapeJava(request.getParameter("age"));
 			exp = StringEscapeUtils.escapeJava(request.getParameter("exp"));
 			UserData userdata = new UserData(sex, age, exp);
-			udService.createUserData(userdata, questionnaire);
 			for (int i = 0; i < questions.size(); i++) {
 				String answertext = StringEscapeUtils.escapeJava(request.getParameter("question_"+String.valueOf(questions.get(i).getId())));
 				Answer answer =  new Answer(answertext, questions.get(i).getQuestion(), questions.get(i));
-				aService.createAnswer(answer, questionnaire);
+				answers.add(answer);
 			}
+			Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day, answers, userdata);
+			for (int i = 0; i < answers.size(); i++) {
+				answers.get(i).setQuestionnaire(questionnaire);
+			}
+			userdata.setQuestionnaire(questionnaire);
+			
+			qaService.createQuestionnaire(questionnaire);
+			
 			
 		} catch (NumberFormatException | NullPointerException e) {
 			isBadRequest = true;
@@ -117,7 +110,7 @@ public class CreateQuestionnaire extends HttpServlet {
 		
 		}else {
 			try {
-				Questionnaire questionnaire = new Questionnaire(user, 1, product_of_the_day);
+				Questionnaire questionnaire = new Questionnaire(user, 1, product_of_the_day, null, null);
 				qaService.createQuestionnaire(questionnaire);
 			}catch (NumberFormatException | NullPointerException e) {
 				isBadRequest = true;

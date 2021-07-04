@@ -33,20 +33,22 @@ public class Questionnaire implements Serializable {
 	@JoinColumn(name = "product")
 	private Product product;
 	
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
 	private UserData userdata;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade =  {CascadeType.REMOVE, CascadeType.PERSIST})
 	private List<Answer> answers;
 
 	public Questionnaire() {
 	}
 
-	public Questionnaire(User user, int iscanceled, Product product) {
+	public Questionnaire(User user, int iscanceled, Product product, List<Answer> answers, UserData userdata) {
 		this.date = new Date();
 		this.user = user;
 		this.iscanceled = iscanceled;
 		this.product = product;
+		this.answers = answers;
+		this.userdata = userdata;
 	}
 
 	public int getId() {

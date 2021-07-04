@@ -38,19 +38,29 @@
 			<h3 th:if="${!s_qa.isEmpty()}">List of Users
 				who submitted the Questionnaire</h3>
 			<h3 th:unless="${!s_qa.isEmpty()}">Nobody submitted the Questionnaire</h3>
+			
+			
+			
+			
 			<ul>
-				<li th:each="qa : ${s_qa}" th:text="${qa.user.username}">      			
+			
+
+				<div th:each="info,iterStat : ${information}">
+				<div th:if="${isheader[iterStat.index]==1}"> 
+				<li  th:text="${info}">
 				</li>
-				
-				
+				</div>
+				<div th:unless="${isheader[iterStat.index]==1}"> 
 				<ul>
-         			<li th:each="a : ${s_a}" th:utext="${'Q: ' + a.questiontext + '&lt;br /&gt;' + 'A: ' + a.answer}"></li>
-      			</ul>
-				<ul th:each="udata : ${ud}">
-         			<li th:utext="${'Q: Age &lt;br /&gt;' + 'A: ' + udata.answer1}"></li>
-         			<li th:utext="${'Q: Sex &lt;br /&gt;' + 'A: ' + udata.answer2}"></li>
-         			<li th:utext="${'Q: Expertise Level &lt;br /&gt;' + 'A: ' + udata.answer3}"></li>
-      			</ul>
+				<li  th:text="${info}">
+				</li>
+				</ul>
+				</div>
+				
+				
+				</div>
+				
+				
 				
 			</ul>
 			<h3 th:if="${!c_qa.isEmpty()}">List of Users

@@ -21,7 +21,7 @@ public class UserData implements Serializable {
 	
 	private String answer3;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "questionnaire")
 	private Questionnaire questionnaire;
 

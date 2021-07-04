@@ -23,12 +23,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import marketing.entities.*;
-import marketing.services.AnswerService;
 import marketing.services.ProductService;
-import marketing.services.QuestionService;
 import marketing.services.QuestionnaireService;
-import marketing.services.UserDataService;
-import marketing.services.UserService;
 
 /**
  * Servlet implementation class GoToLeaderboard
@@ -39,16 +35,8 @@ public class GoToLeaderboard extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "marketing.services/ProductService")
 	private ProductService pService;
-	@EJB(name = "marketing.services/QuestionService")
-	private QuestionService qService;
-	@EJB(name = "marketing.services/AnswerService")
-	private AnswerService aService;
-	@EJB(name = "marketing.services/UserDataService")
-	private UserDataService udService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-	@EJB(name = "marketing.services/UserService")
-	private UserService uService;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -79,7 +67,6 @@ public class GoToLeaderboard extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		
 		Questionnaire questionnaire = null;
         User currentUser = null;
         int points = 0;
@@ -92,6 +79,7 @@ public class GoToLeaderboard extends HttpServlet {
         String product_name = null;
         try {
 			List<Product> products = pService.findProductOfTheDay();
+			
 			Product product_of_the_day = products.get(0);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy");
 	        date = new Date();
@@ -141,7 +129,6 @@ public class GoToLeaderboard extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("leaderboard", leaderboard);
-		ctx.setVariable("date", date);
 		ctx.setVariable("current_date", currentDate);
 		ctx.setVariable("product_name", product_name);
 		templateEngine.process(path, ctx, response.getWriter());

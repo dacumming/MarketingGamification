@@ -81,10 +81,9 @@ public class QuestionnaireDeletion extends HttpServlet {
 			separated = user_selection.split(",");
 			date_aux = sdf.parse(separated[0]);
 			c.setTime(date_aux);
-			c.add(Calendar.DATE, 1);
+			//c.add(Calendar.DATE, 1);
 			dt = sdf.format(c.getTime());
 			qdate=sdf.parse(dt); 
-			System.out.println(qdate);
 			prodId = Integer.parseInt(separated[1]);
 			
 			

@@ -71,7 +71,9 @@ public class QuestionnaireService {
 	
 	
 	public void createQuestionnaire(Questionnaire questionnaire) {	
+		
 		em.persist(questionnaire);
+		
 	}
 	 
 	

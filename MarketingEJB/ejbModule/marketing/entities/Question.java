@@ -24,7 +24,7 @@ public class Question implements Serializable {
 	private String question;
 
 	// Bidirectional one-to-many association to Review
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
 	private List<Answer> reviews;
 	
 	// Bi-directional many-to-one association to Product. Question is the owner
