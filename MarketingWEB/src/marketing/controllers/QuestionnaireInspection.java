@@ -131,6 +131,7 @@ public class QuestionnaireInspection extends HttpServlet {
 		ctx.setVariable("selected_product_name", pService.findProductById(prodId).getName());
 		ctx.setVariable("information", information);
 		ctx.setVariable("isheader", isheader);
+		ctx.setVariable("s_qa", s_qa);
 		ctx.setVariable("c_qa", c_qa);
 		String path = "/WEB-INF/AdminInspection.html";
 		templateEngine.process(path, ctx, response.getWriter());
