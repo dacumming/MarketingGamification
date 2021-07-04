@@ -33,7 +33,7 @@ CREATE TABLE `usertable` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `usertable` WRITE;
 /*!40000 ALTER TABLE `usertable` DISABLE KEYS */;
-INSERT INTO `usertable` VALUES (1,'admin','1234','admin@mail.com',0,0),(2,'user1','pass1','user1@mail.com',2,0),(3,'user2','pass2','user2@mail.com',10,0);
+INSERT INTO `usertable` VALUES (1,'admin','1234','admin@mail.com',0,0),(2,'user1','pass1','user1@mail.com',14,0),(3,'user2','pass2','user2@mail.com',10,0),(4,'user3','pass3','user3@mail.com',12,0);
 /*!40000 ALTER TABLE `usertable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `questionnaire` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'2021-05-22',0,2,1),(2,'2021-05-30',1,3,1),(7,'2021-05-16',1,2,2),(8,'2021-05-16',0,3,2),(9,'2021-05-16',0,3,1),(10,'2021-05-17',0,2,1),(12,'2021-05-17',1,3,1);
+INSERT INTO `questionnaire` VALUES (1,'2021-07-03',0,2,2),(2,'2021-07-03',0,3,2),(3,'2021-07-03',0,4,2),(4,'2021-07-04',0,2,1),(5,'2021-07-04',0,3,1),(6,'2021-07-04',0,4,1);
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,7 +106,7 @@ CREATE TABLE `userdata` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `userdata` WRITE;
 /*!40000 ALTER TABLE `userdata` DISABLE KEYS */;
-INSERT INTO `userdata` VALUES (1,'23','F','High',1),(6,'40','','Low',8);
+INSERT INTO `userdata` VALUES (1,'23','F','High',1),(2,'','','',2),(3,'40','','Medium',3),(4,'23','F','',4),(5,'40','M','Low',5),(6,'40','M','',6);
 /*!40000 ALTER TABLE `userdata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +146,7 @@ CREATE TABLE `answer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,'not bad','do you like the product?',1,1),(2,'duck off','do you like the product?',2,1),(3,'get your ship out of here!','do you like the product?',3,1),(4,'could be better','do you like the product?',8,2),(5,'i liked it','do you like the product?',7,1),(6,'I hated it','do you like the product?',8,1),(7,'what the heck','do you like the product?',1,3),(8,'mmm...','do you like the product?',7,1),(9,'va bene','do you like the product?',8,1),(10,'mamma mia','do you like the product?',8,4);
+INSERT INTO `answer` VALUES (1,'I have seen better','Does it have good quality/price ratio?',1,3),(2,'it is at all','Is it useful for your purposes?',1,4),(3,'I think so, but not sure','Does it have good quality/price ratio?',2,3),(4,'not much','Is it useful for your purposes?',2,4), (5,'I would say it does','Does it have good quality/price ratio?',3,3),(6,'sometimes','Is it useful for your purposes?',3,4),(7,'Absolutely','It sounds good?',4,1),(8,'sure','Is it useful for your purposes?',4,2),(9,'I have seen better','It sounds good?',5,1),(10,'not much','Is it useful for your purposes?',5,2),(11,'So so','It sounds good?',6,1),(12,'To be honest, yes','Is it useful for your purposes?',6,2);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
