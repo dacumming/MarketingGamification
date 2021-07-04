@@ -51,55 +51,18 @@ public class GoToHomePage extends HttpServlet {
 			return;
 		}
 
-		User username = (User) session.getAttribute("username");
-		User email = (User) session.getAttribute("email");
 		
 		List<Product> products = null;
 		
 		try {
 
-			/*
-			 * HERE WE SHOW SEVERAL WAYS TO DEAL WITH SECOND LEVEL CACHING, AKA SHARED
-			 * CACHE. SHARED CACHE IS MAINTAINED BY THE ENTITY MANAGER FACTORY AND SERVES
-			 * REQUESTS FROM MULTIPLE ENTITY MANAGERS. IF AN ENTITY IS DELETED OUTSIDE OF
-			 * JPA THE SHARED CACHE MAY STILL SEE IT. THUS IF THE DATABASE IS ACCESSED ALSO
-			 * BY OTHER NON JPA APPLICATIONS AND JPA LOCKING IS NOT USED, REFRESHING THE
-			 * CACHE IS NEEDED TO SEE THE CURRENT DATABASE STATE. IF YOU WANT TO TEST THEM,
-			 * CHANGE THE SERVICE METHOD USED AND LOGIN. THEN DELETE SOME MISSIONS WITH THE
-			 * MYSQL WORKBENCH, LOGOUT AND LOGIN AGAIN TO SEE THE DIFFERENT BEHAVIORS WRT
-			 * THE SHARED CACHE. WE ALSO SHOW USING THE PERSISTENCE CONTEXT AND THE
-			 * RELATIONSHIP TO LIST THE MISSION OF THE USER. IN THIS CASE RESORTING IS DONE
-			 * AT THE CLIENT AND NOT BY THE QUERY. PLAY WITH THE FETCH MODE OF THE
-			 * RELATIONSHIP TO SEE WHAT HAPPENS TO SORTING AFTER YOU INSERT A NEW MISSION
-			 */
-
-			/*
-			 * These versions uses a JPQ query, with or without hint, which is translated to
-			 * / SQL and bypasses the shared cache. Sorting is done by the query.
-			 */
-			// missions = mService.findMissionsByUserJPQL(user.getId());
-			// missions = mService.findMissionsByUserNoCache(user.getId());
-
-			/*
-			 * This version uses the relationship collection, fetched eagerly and resorted.
-			 * It fetches missions from the shared cache (including ones deleted outside
-			 * JPA)
-			 */
-			// missions = mService.findMissionsByUser(user.getId());
-			// missions.sort(Comparator.comparing(Mission::getDate).reversed());
-
-			/*
-			 * This version uses the relationship collection and fetches missions from the
-			 * shared cache. However it explicitly refreshes the status of the reporter from
-			 * the database.  Collection resorting is done by the refresh of the reporter
-			 */
-			  //products = pService.findAllProducts();
+			
 			  products = pService.findProductOfTheDay();
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
 		}
-		// Redirect to the Home page and add missions to the parameters
+
 		String path = "/WEB-INF/Home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

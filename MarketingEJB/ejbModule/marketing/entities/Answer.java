@@ -22,17 +22,14 @@ public class Answer implements Serializable {
 	@JoinColumn(name = "questionnaire")
 	private Questionnaire questionnaire;
 
-	@ManyToOne
-	@JoinColumn(name = "question")
-	private Question question;
+	 
 
 	public Answer() {
 	}
 
-	public Answer(String answer, String questiontext, Question question) {
+	public Answer(String answer, String questiontext) {
 		this.answer = answer;
 		this.questiontext = questiontext;
-		this.question = question;
 		this.questionnaire = null;
 	}
 	
@@ -60,14 +57,6 @@ public class Answer implements Serializable {
 		this.questiontext = questiontext;
 	}
 	
-	
-	public Question getQuestion() {
-		return this.question;
-	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
 
 	public Questionnaire getQuestionnaire() {
 		return this.questionnaire;

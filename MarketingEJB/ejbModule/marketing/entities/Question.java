@@ -3,7 +3,6 @@ package marketing.entities;
 import java.io.Serializable;
 
 import javax.persistence.*;
-import java.util.List;
 import java.lang.String;
 
 /**
@@ -21,14 +20,8 @@ public class Question implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String question;
-
-	// Bidirectional one-to-many association to Review
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
-	private List<Answer> reviews;
+	private String question;	 
 	
-	// Bi-directional many-to-one association to Product. Question is the owner
-	// entity
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;
@@ -65,19 +58,5 @@ public class Question implements Serializable {
 		this.product = product;
 	}
 
-	public List<Answer> getReviews() {
-		return this.reviews;
-	}
-
-	public void addReview(Answer review) {
-		getReviews().add(review);
-		review.setQuestion(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
-	}
-
-	public void removeReview(Answer review) {
-		getReviews().remove(review);
-	}
 
 }
