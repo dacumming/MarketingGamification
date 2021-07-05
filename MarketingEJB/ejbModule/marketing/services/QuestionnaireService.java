@@ -24,8 +24,10 @@ import marketing.exceptions.BadQuestionnaireDelete;
 public class QuestionnaireService {
 	@PersistenceContext(unitName = "MarketingEJB")
 	private EntityManager em;
+	
 
 	public QuestionnaireService() {
+		
 	}
 	
 	private Date getToday() {
@@ -58,6 +60,8 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findQuestionnairesByDateProduct(Date q_date, int productId) {
+		System.out.println("hola");
+		em.getEntityManagerFactory().getCache().evictAll();
 		TypedQuery<Questionnaire> query = em
 				.createQuery("Select qa from Questionnaire qa where qa.date=:qdate and qa.product.id=:prodId", Questionnaire.class);
 		List<Questionnaire> questionnaires = query
@@ -69,6 +73,20 @@ public class QuestionnaireService {
 		return questionnaires;
 	}
 	
+	public List<Questionnaire> findQuestionnairesByDateProductUser(Date q_date, int productId, int userId) {
+		System.out.println("hola");
+		em.getEntityManagerFactory().getCache().evictAll();
+		TypedQuery<Questionnaire> query = em
+				.createQuery("Select qa from Questionnaire qa where qa.date=:qdate and qa.product.id=:prodId and qa.user.id=:userId", Questionnaire.class);
+		List<Questionnaire> questionnaires = query
+				.setParameter("qdate", q_date, TemporalType.DATE)
+				.setParameter("prodId", productId)
+				.setParameter("userId", userId)
+				.getResultList();
+		
+
+		return questionnaires;
+	}
 	
 	public void createQuestionnaire(Questionnaire questionnaire) {	
 		

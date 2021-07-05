@@ -48,6 +48,7 @@ public class GoToLeaderboard extends HttpServlet {
     public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		templateResolver.setCacheable(false);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		this.templateEngine = new TemplateEngine();
 		this.templateEngine.setTemplateResolver(templateResolver);
@@ -99,7 +100,7 @@ public class GoToLeaderboard extends HttpServlet {
 		        	User currentUser2 = q2.getUser();
 		        	int points2 = currentUser2.getPoints();
 		        	
-	                return points1 - points2;
+	                return points2 - points1;
 	            }
 	        }); 
 	        
@@ -109,8 +110,10 @@ public class GoToLeaderboard extends HttpServlet {
 	        	currentUser = questionnaire.getUser();
 	        	if (!existingUser(leaderboard, currentUser)) {
 	        		points = currentUser.getPoints();
-		        	row[0] = currentUser.getUsername();	        	
+		        	row[0] = currentUser.getUsername();	 
+		        	System.out.println(row[0]);
 		        	row[1] = Integer.toString(points);
+		        	System.out.println(row[1]);
 		        	leaderboard.add(row);
 	        	}
 	        	

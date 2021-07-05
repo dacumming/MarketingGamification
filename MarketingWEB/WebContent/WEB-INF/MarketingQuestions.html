@@ -5,12 +5,13 @@
 <title>Marketing Questions</title>
 </head>
 <body>
-
+	<div align="right">
+		<a th:href="@{/Home}">Return</a>
+	</div>
+	<div th:unless="${questionnaire_filled}">
 	<form action="#" th:action="@{/CreateQuestionnaire}" method="POST">
 	<div id="mandatory" style="display: block">
-		<div align="right">
-			<a th:href="@{/Home}">Return</a>
-		</div>
+		
 		<h3>Please answer the following mandatory questions</h3>
 		<div th:each="q : ${questions}">
 		    <span th:text="${q.question}"></span><input type="text" th:name="|question_${q.id}|" required> <br><br />
@@ -73,6 +74,10 @@
 			mandatory.style = "display: none";
 		}
 	</script>
+	</div>
+	<div th:if="${questionnaire_filled}">
+	<a>Sorry, you have already filled the questionnaire of the day. Please come back tomorrow!</a>
+	</div>
 </body>
 </html>
 

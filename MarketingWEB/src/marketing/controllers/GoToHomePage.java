@@ -50,11 +50,11 @@ public class GoToHomePage extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-
 		User username = (User) session.getAttribute("username");
-		User email = (User) session.getAttribute("email");
-		
+		User email = (User) session.getAttribute("email");		
 		List<Product> products = null;
+		Product product_of_the_day = null;
+		boolean product_exists = false;
 		
 		try {
 
@@ -95,7 +95,17 @@ public class GoToHomePage extends HttpServlet {
 			 */
 			  //products = pService.findAllProducts();
 			  products = pService.findProductOfTheDay();
+			  int product_size = products.size();
+			  System.out.println(1);
+			  if (product_size > 0) {
+				  product_exists = true;
+				  System.out.println(2);
+				  product_of_the_day = products.get(0);
+			  }
+			  
+			  System.out.println(3);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");
 			return;
 		}
@@ -104,6 +114,8 @@ public class GoToHomePage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("products", products);
+		ctx.setVariable("product_of_the_day", product_of_the_day);
+		ctx.setVariable("product_exists", product_exists);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

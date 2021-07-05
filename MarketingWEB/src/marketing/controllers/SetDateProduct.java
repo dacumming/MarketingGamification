@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -63,14 +64,28 @@ public class SetDateProduct extends HttpServlet {
 		}
 
 		Product product = pService.findProductById(productId);
-
+		List<Product> product_same_date = pService.findProductByDate(date);
 		Date oldDate = product.getDate();
 		
 		try {
-			
-			if (product.getDate() != date) {
+			if (product.getDate() != null) {
+				if (product.getDate() != date) {
+					product.setDate(date);
+					pService.updateDate(product);
+				}
+			}
+			else {
 				product.setDate(date);
+				System.out.println(product);
 				pService.updateDate(product);
+			}
+			if (product_same_date.size() > 0) {
+				for (int i = 0; i < product_same_date.size(); i++) {
+					Product current_product_same_date = product_same_date.get(i);
+					current_product_same_date.setDate(null);
+					pService.updateDate(current_product_same_date);
+				}
+				
 			}
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to update date");

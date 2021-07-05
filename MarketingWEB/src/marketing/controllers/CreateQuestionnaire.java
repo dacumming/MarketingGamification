@@ -74,39 +74,39 @@ public class CreateQuestionnaire extends HttpServlet {
 		System.out.println(submitOption);
 		if(submitOption.equals("Submit")){
 		
-		List<Answer> answers = new ArrayList<Answer>();
-		List<Question> questions =product_of_the_day.getQuestions();		
-		String sex = null;
-		String age = null;
-		String exp = null;
-		
-		try {
+			List<Answer> answers = new ArrayList<Answer>();
+			List<Question> questions =product_of_the_day.getQuestions();		
+			String sex = null;
+			String age = null;
+			String exp = null;
 			
-			
-			sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
-			age = StringEscapeUtils.escapeJava(request.getParameter("age"));
-			exp = StringEscapeUtils.escapeJava(request.getParameter("exp"));
-			UserData userdata = new UserData(sex, age, exp);
-			for (int i = 0; i < questions.size(); i++) {
-				String answertext = StringEscapeUtils.escapeJava(request.getParameter("question_"+String.valueOf(questions.get(i).getId())));
-				Answer answer =  new Answer(answertext, questions.get(i).getQuestion(), questions.get(i));
-				answers.add(answer);
+			try {
+				
+				
+				sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
+				age = StringEscapeUtils.escapeJava(request.getParameter("age"));
+				exp = StringEscapeUtils.escapeJava(request.getParameter("exp"));
+				UserData userdata = new UserData(sex, age, exp);
+				for (int i = 0; i < questions.size(); i++) {
+					String answertext = StringEscapeUtils.escapeJava(request.getParameter("question_"+String.valueOf(questions.get(i).getId())));
+					Answer answer =  new Answer(answertext, questions.get(i).getQuestion(), questions.get(i));
+					answers.add(answer);
+				}
+				Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day, answers, userdata);
+				for (int i = 0; i < answers.size(); i++) {
+					answers.get(i).setQuestionnaire(questionnaire);
+				}
+				userdata.setQuestionnaire(questionnaire);
+				
+				qaService.createQuestionnaire(questionnaire);
+				
+				
+			} catch (NumberFormatException | NullPointerException e) {
+				isBadRequest = true;
+				e.printStackTrace();
 			}
-			Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day, answers, userdata);
-			for (int i = 0; i < answers.size(); i++) {
-				answers.get(i).setQuestionnaire(questionnaire);
-			}
-			userdata.setQuestionnaire(questionnaire);
 			
-			qaService.createQuestionnaire(questionnaire);
-			
-			
-		} catch (NumberFormatException | NullPointerException e) {
-			isBadRequest = true;
-			e.printStackTrace();
-		}
-		
-		feedback = "Thanks for filling the questionnaire";
+			feedback = "Thanks for filling the questionnaire";
 		
 		}else {
 			try {

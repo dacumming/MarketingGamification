@@ -1,12 +1,15 @@
 package marketing.services;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 import marketing.exceptions.UpdateDateException;
 import marketing.exceptions.ProductException;
@@ -29,6 +32,16 @@ public class ProductService {
 	public List<Product> findProductOfTheDay() {
 		List<Product> products = em
 				.createQuery("Select p from Product p where p.date = current_date", Product.class)
+				.getResultList();
+
+		return products;
+	}
+	
+	public List<Product> findProductByDate(Date product_date) {
+		TypedQuery<Product> query = em
+				.createQuery("Select p from Product p where p.date=:product_date", Product.class);
+		List<Product> products = query
+				.setParameter("product_date", product_date, TemporalType.DATE)
 				.getResultList();
 
 		return products;

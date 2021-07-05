@@ -24,18 +24,16 @@
 	document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
 	</script>
 
-	
-	<div th:each="p : ${products}">
-    <span th:text="${'Product of the day: ' +  p.name}"></span><br />
-    <span th:text="${'Brand: ' +  p.brand}"></span><br />
-    <img th:src="${p.image}" >
-    </div>
     
-   	<div>
-		<a th:href="@{/MarketingQuestions}">Fill questionnaire</a>
-	</div>
-	<div>
+   	<div th:if="${product_exists}">
+	   	<span th:text="${'Product of the day: ' +  product_of_the_day.name}"></span><br />
+	    <span th:text="${'Brand: ' +  product_of_the_day.brand}"></span><br />
+	    <img th:src="${product_of_the_day.image}" ><br />
+		<a th:href="@{/MarketingQuestions}">Fill questionnaire</a><br />
 		<a th:href="@{/Leaderboard}">See leaderboard</a>
+	</div>
+	<div th:unless="${product_exists}">
+		<a>Sorry, there are no products of the day</a>
 	</div>
 
 
