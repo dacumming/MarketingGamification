@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
-import marketing.entities.Questionnaire;
 import marketing.entities.User;
 
 import javax.persistence.NonUniqueResultException;
@@ -67,6 +66,14 @@ public class UserService {
 		}
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
+	}
+	public void updateIsBanned(User user) throws UpdateIsBannedException {
+		try {
+			user.setIsbanned(1);
+			em.merge(user);
+		} catch (PersistenceException e) {
+			throw new UpdateIsBannedException("Could not change banning");
+		}
 	}
 	
 

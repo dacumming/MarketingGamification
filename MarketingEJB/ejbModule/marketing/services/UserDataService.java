@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 
 import javax.persistence.TypedQuery;
 
-import marketing.entities.Answer;
 import marketing.entities.Questionnaire;
 import marketing.entities.UserData;
 

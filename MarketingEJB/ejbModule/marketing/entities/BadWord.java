@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "badwords", schema = "marketingdb")
+@NamedQuery(name = "BadWord.findAll", query = "SELECT bw.badword FROM BadWord bw")
 
 public class BadWord implements Serializable {
 	private static final long serialVersionUID = 1L;

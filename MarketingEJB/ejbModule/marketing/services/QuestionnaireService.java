@@ -68,10 +68,8 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findQuestionnairesByDateProductUser(Date q_date, int productId, int userId) {
-		//em.getEntityManagerFactory().getCache().evictAll();
-		User user = em.find(User.class, userId);
-		em.flush();
-		em.refresh(user);
+		em.getEntityManagerFactory().getCache().evictAll();
+
 		TypedQuery<Questionnaire> query = em
 				.createQuery("Select qa from Questionnaire qa where qa.date=:qdate and qa.product.id=:prodId and qa.user.id=:userId", Questionnaire.class);
 		List<Questionnaire> questionnaires = query

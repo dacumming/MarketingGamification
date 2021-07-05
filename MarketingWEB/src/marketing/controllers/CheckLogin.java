@@ -80,6 +80,13 @@ public class CheckLogin extends HttpServlet {
 			ctx.setVariable("errorMsg", "Incorrect username or password");
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
+		} else if (user.getIsbanned() == 1) {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "We are sorry, you are banned so you cannot login");
+			path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
+		
 		} else if (user.getUsername().equals("admin")) {
 			request.getSession().setAttribute("user", user);
 			
