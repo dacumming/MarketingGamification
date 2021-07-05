@@ -86,7 +86,7 @@ CREATE TABLE `products` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'headphones','sony','2021-07-04','https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'),(2,'disk','toshiba','2021-05-16','https://images.unsplash.com/photo-1593448848024-77a27f0690b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');
+INSERT INTO `products` VALUES (1,'headphones','sony','2021-07-05','https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'),(2,'disk','toshiba','2021-05-16','https://images.unsplash.com/photo-1593448848024-77a27f0690b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,17 +136,14 @@ CREATE TABLE `answer` (
   `answer` varchar(300) NOT NULL,
   `questiontext` varchar(200) NOT NULL,
   `questionnaire` int,
-  `question` int,
   PRIMARY KEY (`id`),
   KEY `review_questionnaire_idx` (`questionnaire`),
-  KEY `review_question_idx` (`question`),
-  CONSTRAINT `review_questionnaire` FOREIGN KEY (`questionnaire`) REFERENCES `questionnaire` (`id`),
-  CONSTRAINT `review_question` FOREIGN KEY (`question`) REFERENCES `questions` (`id`)
+  CONSTRAINT `review_questionnaire` FOREIGN KEY (`questionnaire`) REFERENCES `questionnaire` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,'I have seen better','Does it have good quality/price ratio?',1,3),(2,'it is at all','Is it useful for your purposes?',1,4),(3,'I think so, but not sure','Does it have good quality/price ratio?',2,3),(4,'not much','Is it useful for your purposes?',2,4), (5,'I would say it does','Does it have good quality/price ratio?',3,3),(6,'sometimes','Is it useful for your purposes?',3,4),(7,'Absolutely','It sounds good?',4,1),(8,'sure','Is it useful for your purposes?',4,2),(9,'I have seen better','It sounds good?',5,1),(10,'not much','Is it useful for your purposes?',5,2),(11,'So so','It sounds good?',6,1),(12,'To be honest, yes','Is it useful for your purposes?',6,2);
+INSERT INTO `answer` VALUES (1,'I have seen better','Does it have good quality/price ratio?',1),(2,'it is at all','Is it useful for your purposes?',1),(3,'I think so, but not sure','Does it have good quality/price ratio?',2),(4,'not much','Is it useful for your purposes?',2), (5,'I would say it does','Does it have good quality/price ratio?',3),(6,'sometimes','Is it useful for your purposes?',3),(7,'Absolutely','It sounds good?',4),(8,'sure','Is it useful for your purposes?',4),(9,'I have seen better','It sounds good?',5),(10,'not much','Is it useful for your purposes?',5),(11,'So so','It sounds good?',6),(12,'To be honest, yes','Is it useful for your purposes?',6);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 

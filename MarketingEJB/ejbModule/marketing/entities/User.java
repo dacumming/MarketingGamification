@@ -35,7 +35,7 @@ public class User implements Serializable {
 	
 	private int isbanned;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Questionnaire> questionnaires;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade=CascadeType.PERSIST)

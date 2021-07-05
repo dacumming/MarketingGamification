@@ -56,8 +56,6 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findQuestionnairesByDateProduct(Date q_date, int productId) {
-		System.out.println("hola");
-		em.getEntityManagerFactory().getCache().evictAll();
 		TypedQuery<Questionnaire> query = em
 				.createQuery("Select qa from Questionnaire qa where qa.date=:qdate and qa.product.id=:prodId", Questionnaire.class);
 		List<Questionnaire> questionnaires = query
@@ -70,8 +68,10 @@ public class QuestionnaireService {
 	}
 	
 	public List<Questionnaire> findQuestionnairesByDateProductUser(Date q_date, int productId, int userId) {
-		System.out.println("hola");
-		em.getEntityManagerFactory().getCache().evictAll();
+		//em.getEntityManagerFactory().getCache().evictAll();
+		User user = em.find(User.class, userId);
+		em.flush();
+		em.refresh(user);
 		TypedQuery<Questionnaire> query = em
 				.createQuery("Select qa from Questionnaire qa where qa.date=:qdate and qa.product.id=:prodId and qa.user.id=:userId", Questionnaire.class);
 		List<Questionnaire> questionnaires = query

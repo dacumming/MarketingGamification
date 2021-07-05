@@ -25,7 +25,7 @@ public class Questionnaire implements Serializable {
 	
 	private int iscanceled;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
 	
