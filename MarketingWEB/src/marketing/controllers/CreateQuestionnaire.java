@@ -82,14 +82,13 @@ public class CreateQuestionnaire extends HttpServlet {
 			
 			try {
 				
-				
 				sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
 				age = StringEscapeUtils.escapeJava(request.getParameter("age"));
 				exp = StringEscapeUtils.escapeJava(request.getParameter("exp"));
 				UserData userdata = new UserData(sex, age, exp);
 				for (int i = 0; i < questions.size(); i++) {
 					String answertext = StringEscapeUtils.escapeJava(request.getParameter("question_"+String.valueOf(questions.get(i).getId())));
-					Answer answer =  new Answer(answertext, questions.get(i).getQuestion(), questions.get(i));
+					Answer answer =  new Answer(answertext, questions.get(i).getQuestion());
 					answers.add(answer);
 				}
 				Questionnaire questionnaire = new Questionnaire(user, 0, product_of_the_day, answers, userdata);
@@ -100,10 +99,10 @@ public class CreateQuestionnaire extends HttpServlet {
 				
 				qaService.createQuestionnaire(questionnaire);
 				
-				
 			} catch (NumberFormatException | NullPointerException e) {
 				isBadRequest = true;
 				e.printStackTrace();
+
 			}
 			
 			feedback = "Thanks for filling the questionnaire";

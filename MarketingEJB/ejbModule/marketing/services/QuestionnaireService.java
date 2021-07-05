@@ -1,7 +1,6 @@
 package marketing.services;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +13,7 @@ import javax.persistence.TypedQuery;
 
 import marketing.entities.Questionnaire;
 import marketing.entities.User;
-import marketing.entities.UserData;
-import marketing.entities.Answer;
 import marketing.entities.Product;
-import marketing.entities.Question;
 import marketing.exceptions.BadQuestionnaireDelete;
 
 @Stateless
@@ -103,7 +99,7 @@ public class QuestionnaireService {
 		if (format.format(questionnaire.getDate()).equals(format.format(getToday()))) {
 			throw new BadQuestionnaireDelete("Deletion should be possible only for a date preceding the current date.");
 		}
-		user.removeQuestionnaire(questionnaire); // this updates both directions of the associations
+		user.removeQuestionnaire(questionnaire);
 		product.removeQuestionnaire(questionnaire);
 		em.remove(questionnaire);
 	}

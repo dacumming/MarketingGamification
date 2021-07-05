@@ -30,11 +30,9 @@ public class Product implements Serializable {
 
 	private String image;
 	
-	// Bidirectional one-to-many association to Review
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private List<Questionnaire> questionnaires;
 	
-	// Bidirectional one-to-many association to Question
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.PERSIST)
 	private List<Question> questions;
 	

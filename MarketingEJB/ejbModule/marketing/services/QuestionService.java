@@ -23,7 +23,6 @@ public class QuestionService {
 	public void createQuestion(String questiontext, int productId) {
 		Product product = em.find(Product.class, productId);
 		Question question = new Question(questiontext, product);
-		// for debugging: let's check if mission is managed
 		System.out.println("Method createQuestion before product.addQuestion(question)");
 		System.out.println("Is question object managed?  " + em.contains(question));
 
