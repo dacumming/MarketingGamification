@@ -21,8 +21,6 @@ public class UserLogin implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datetime;
 	
-	// Bi-directional many-to-one association to User. UserLogin is the owner
-	// entity
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
@@ -56,12 +54,6 @@ public class UserLogin implements Serializable {
 	}
 
 	public void setUser(User user) {
-		/*
-		 * for debugging and transaction tracing only
-		 * System.out.println("Method setMission of Expense Entity");
-		 * JPATxUtils.printTxId(); // prints the JTA hash of the transaction object
-		 * JPATxUtils.printTxStatus(); // prints the JTA status of the transaction
-		 */
 		this.user = user;
 	}
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import marketing.entities.*;
+import marketing.entities.Product;
 import marketing.services.ProductService;
 
 @WebServlet("/SetDateProduct")
@@ -76,7 +76,6 @@ public class SetDateProduct extends HttpServlet {
 			}
 			else {
 				product.setDate(date);
-				System.out.println(product);
 				pService.updateDate(product);
 			}
 			if (product_same_date.size() > 0) {
@@ -93,7 +92,7 @@ public class SetDateProduct extends HttpServlet {
 			return;
 		}
 		
-		// return the user to the right view
+
 		String ctxpath = getServletContext().getContextPath();
 		String path = ctxpath + "/AdminCreation";
 		response.sendRedirect(path);

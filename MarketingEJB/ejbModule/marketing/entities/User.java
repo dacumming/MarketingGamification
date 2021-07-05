@@ -109,8 +109,6 @@ public class User implements Serializable {
 	public void addQuestionnaire(Questionnaire questionnaire) {
 		getQuestionnaires().add(questionnaire);
 		questionnaire.setUser(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
 	}
 
 	public void removeQuestionnaire(Questionnaire questionnaire) {
@@ -124,8 +122,6 @@ public class User implements Serializable {
 	public void addUserLogin(UserLogin userlogin) {
 		getUserLogins().add(userlogin);
 		userlogin.setUser(this);
-		// aligns both sides of the relationship
-		// if mission is new, invoking persist() on reporter cascades also to mission
 	}
 
 	public void removeUserLogin(UserLogin userlogin) {

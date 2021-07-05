@@ -24,7 +24,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.entities.*;
+import marketing.entities.Answer;
+import marketing.entities.Questionnaire;
+import marketing.entities.UserData;
 import marketing.services.ProductService;
 import marketing.services.QuestionnaireService;
 

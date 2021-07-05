@@ -28,7 +28,6 @@ public class UserService {
 		List<User> users = null;
 		try {
 			users = em.createNamedQuery("User.checkUsernames", User.class).setParameter(1, usr).setParameter(2, email).getResultList();
-			//System.out.println(users);
 			if (users.isEmpty()) {
 				return 0;
 			} else {

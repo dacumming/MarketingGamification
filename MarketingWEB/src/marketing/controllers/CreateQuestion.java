@@ -58,9 +58,7 @@ public class CreateQuestion extends HttpServlet {
 			return;
 		}
 
-		
-		
-		// return the user to the right view
+
 		String ctxpath = getServletContext().getContextPath();
 		String path = ctxpath + "/AdminCreation";
 		response.sendRedirect(path);

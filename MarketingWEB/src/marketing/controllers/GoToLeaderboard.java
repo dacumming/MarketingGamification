@@ -22,7 +22,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.entities.*;
+import marketing.entities.Product;
+import marketing.entities.Questionnaire;
+import marketing.entities.User;
 import marketing.services.ProductService;
 import marketing.services.QuestionnaireService;
 
@@ -37,12 +39,9 @@ public class GoToLeaderboard extends HttpServlet {
 	private ProductService pService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public GoToLeaderboard() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     public void init() throws ServletException {
@@ -56,12 +55,9 @@ public class GoToLeaderboard extends HttpServlet {
 	}
     
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
 			String loginpath = getServletContext().getContextPath() + "/index.html";
@@ -87,10 +83,7 @@ public class GoToLeaderboard extends HttpServlet {
 	        currentDate = dateFormat.format(date);
 	        int prodId = product_of_the_day.getId();
 	        product_name = product_of_the_day.getName();
-	        System.out.println(date);
-	        System.out.println(currentDate);
-	        System.out.println(prodId);
-	        System.out.println("***************************");
+
 	        questionnaires_of_the_day = qaService.findQuestionnairesByDateProduct(date, prodId);
 	        Collections.sort(questionnaires_of_the_day, new Comparator<Questionnaire>() {
 	            @Override
@@ -110,10 +103,8 @@ public class GoToLeaderboard extends HttpServlet {
 	        	currentUser = questionnaire.getUser();
 	        	if (!existingUser(leaderboard, currentUser)) {
 	        		points = currentUser.getPoints();
-		        	row[0] = currentUser.getUsername();	 
-		        	System.out.println(row[0]);
+		        	row[0] = currentUser.getUsername();	
 		        	row[1] = Integer.toString(points);
-		        	System.out.println(row[1]);
 		        	leaderboard.add(row);
 	        	}
 	        	

@@ -23,10 +23,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.entities.*;
 import marketing.services.ProductService;
 import marketing.services.QuestionnaireService;
-import marketing.services.UserService;
+import marketing.entities.Questionnaire;
 import marketing.exceptions.BadQuestionnaireDelete;
 
 
@@ -38,8 +37,6 @@ public class QuestionnaireDeletion extends HttpServlet {
 	private ProductService pService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-	@EJB(name = "marketing.services/UserService")
-	private UserService uService;
 
     public QuestionnaireDeletion() {
         super();

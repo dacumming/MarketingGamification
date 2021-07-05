@@ -18,8 +18,8 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import marketing.services.*;
-import marketing.entities.*;
+import marketing.entities.Product;
+import marketing.services.ProductService;
 
 @WebServlet("/Home")
 public class GoToHomePage extends HttpServlet {
@@ -43,7 +43,7 @@ public class GoToHomePage extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
+
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
@@ -60,14 +60,11 @@ public class GoToHomePage extends HttpServlet {
 			
 			  products = pService.findProductOfTheDay();
 			  int product_size = products.size();
-			  System.out.println(1);
 			  if (product_size > 0) {
 				  product_exists = true;
-				  System.out.println(2);
 				  product_of_the_day = products.get(0);
 			  }
 			  
-			  System.out.println(3);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get data");

@@ -20,9 +20,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import marketing.entities.Questionnaire;
 import marketing.services.QuestionnaireService;
 
-/**
- * Servlet implementation class GoToDeletionPage
- */
+
 @WebServlet("/AdminDeletion")
 public class GoToDeletionPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
