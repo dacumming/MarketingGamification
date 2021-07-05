@@ -24,13 +24,6 @@ public class UserService {
 		em.persist(user); // makes also user object managed via cascading
 	}
 	
-	public List<User> getUserById(int id) {
-		List<User> user_points = em
-				.createQuery("Select u from User u where u.id=:id", User.class)
-				.getResultList();
-		return user_points;
-	}
-	
 	public int findUserByUser(String usr, String email) throws UsernameException {
 		List<User> users = null;
 		try {
