@@ -30,10 +30,6 @@ public class QuestionnaireService {
 		return new Date(System.currentTimeMillis());
 	}
 	
-	public Questionnaire findQuestionnaireById(int questionnaireId) {
-		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireId);
-		return questionnaire;
-	}
 	
 	public List<Questionnaire> findQuestionnaireDates() {
 		List<Questionnaire> q_dates = em

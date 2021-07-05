@@ -15,11 +15,6 @@ public class QuestionService {
 	public QuestionService() {
 	}
 	
-	public Question findQuestionById(int questionId) {
-		Question question = em.find(Question.class, questionId);
-		return question;
-	}
-	
 	public void createQuestion(String questiontext, int productId) {
 		Product product = em.find(Product.class, productId);
 		Question question = new Question(questiontext, product);

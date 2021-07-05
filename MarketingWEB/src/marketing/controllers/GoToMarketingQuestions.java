@@ -24,25 +24,17 @@ import marketing.entities.Question;
 import marketing.entities.Questionnaire;
 import marketing.entities.User;
 
-/**
- * Servlet implementation class GoToMarketingQuestions
- */
 @WebServlet("/MarketingQuestions")
 public class GoToMarketingQuestions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "marketing.services/ProductService")
 	private ProductService pService;
-	@EJB(name = "marketing.services/QuestionService")
-	private QuestionService qService;
 	@EJB(name = "marketing.services/QuestionnaireService")
 	private QuestionnaireService qaService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+ 
     public GoToMarketingQuestions() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public void init() throws ServletException {
