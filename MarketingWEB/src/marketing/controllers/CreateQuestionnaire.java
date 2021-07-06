@@ -134,11 +134,7 @@ public class CreateQuestionnaire extends HttpServlet {
 					answers.get(i).setQuestionnaire(questionnaire);
 				}
 				userdata.setQuestionnaire(questionnaire);
-				if (areThereBadWords) {
-					
-				} else {
-					qaService.createQuestionnaire(questionnaire);
-				}
+				qaService.createQuestionnaire(questionnaire);
 				
 			} catch (NumberFormatException | NullPointerException e) {
 				isBadRequest = true;
