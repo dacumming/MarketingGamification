@@ -119,7 +119,7 @@ public class CreateQuestionnaire extends HttpServlet {
 					ServletContext servletContext = getServletContext();
 					final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 					templateEngine.process(path, ctx, response.getWriter());
-				}
+				}else{
 				 
 				sex = StringEscapeUtils.escapeJava(request.getParameter("sex"));
 				age = StringEscapeUtils.escapeJava(request.getParameter("age"));
@@ -135,7 +135,7 @@ public class CreateQuestionnaire extends HttpServlet {
 				}
 				userdata.setQuestionnaire(questionnaire);
 				qaService.createQuestionnaire(questionnaire);
-				
+				}
 			} catch (NumberFormatException | NullPointerException e) {
 				isBadRequest = true;
 				e.printStackTrace();
