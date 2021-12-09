@@ -1,2 +1,2 @@
 # MarketingGamification
- Databases 2 JPA Project: Persistent ORM
+ Databases 2 course project: Java Persistence API
